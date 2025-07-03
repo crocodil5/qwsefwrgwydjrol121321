@@ -101,7 +101,13 @@ export const MainContentSection = (): JSX.Element => {
             {/* Language/Region Selector */}
             <div className="flex-wrap items-start pb-5">
               <div className="items-center self-stretch inline-flex">
-                <div className="relative w-8 h-[18px] bg-[url(/figmaAssets/link---alle-l-nder-regionen-anzeigen.png)] bg-cover bg-[50%_50%]" />
+                <div className="relative w-8 h-[18px]">
+                  <img 
+                    src="/attached_assets/de-min_1751561395493.png" 
+                    alt="German flag" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
