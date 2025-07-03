@@ -17,7 +17,13 @@ export const ActionButtonSection = (): JSX.Element => {
       <div className="flex flex-col items-center justify-center w-full max-w-screen-lg">
         <Card className="w-full max-w-[560px] bg-wwwpaypalcomwhite border-none shadow-none">
           <CardContent className="flex flex-col items-center justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6">
-            <h2 className="font-normal text-xl sm:text-2xl text-wwwpaypalcomblack text-center tracking-[-0.48px] leading-7 sm:leading-8 mb-4 sm:mb-6">
+            <h2 
+              className="text-xl sm:text-2xl text-wwwpaypalcomblack text-center tracking-[-0.48px] leading-7 sm:leading-8 mb-4 sm:mb-6"
+              style={{ 
+                fontFamily: 'var(--www-paypal-com-button-font-family)',
+                fontWeight: 'var(--www-paypal-com-button-font-weight)'
+              }}
+            >
               {paymentData.title}
             </h2>
 
