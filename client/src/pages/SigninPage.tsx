@@ -213,7 +213,7 @@ export const SigninPage = (): JSX.Element => {
                     </div>
 
                     <a
-                      className="text-wwwpaypalcomscience-blue text-base font-normal [font-family:'Helvetica_Neue-Regular',Helvetica]"
+                      className="text-wwwpaypalcomscience-blue text-base font-normal font-www-paypal-com-helvetica-neue-regular"
                       href="https://www.paypal.com/authflow/password-recovery/"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -225,7 +225,7 @@ export const SigninPage = (): JSX.Element => {
 
                 <Button 
                   onClick={handleSubmit}
-                  className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200"
+                  className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite font-www-paypal-com-helvetica-neue-medium font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200"
                 >
                   Einloggen
                 </Button>
@@ -264,7 +264,7 @@ export const SigninPage = (): JSX.Element => {
                     <rect width="30" height="6.66" y="13.34" fill="#f8e96a" />
                   </svg>
                   <button
-                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="font-www-paypal-com-helvetica-neue-bold font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
                     onClick={() => window.location.reload()}
                   >
                     Deutsch
@@ -273,7 +273,7 @@ export const SigninPage = (): JSX.Element => {
 
                 <div className="flex items-center h-4 border-l border-[#cccccc] pl-3">
                   <button
-                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="font-www-paypal-com-helvetica-neue-regular font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
                     onClick={() => window.location.reload()}
                   >
                     English
@@ -293,7 +293,7 @@ export const SigninPage = (): JSX.Element => {
                   className="inline-flex items-start justify-center"
                 >
                   <a
-                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
+                    className="font-www-paypal-com-helvetica-neue-regular font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
