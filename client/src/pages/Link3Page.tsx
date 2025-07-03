@@ -21,19 +21,19 @@ export const Link3Page = (): JSX.Element => {
   // Footer links data
   const footerLinks = [
     {
-      text: "Contact Us",
+      text: "Kontakt",
       href: "https://www.paypal.com/de/smarthelp/contact-us",
     },
     {
-      text: "Privacy",
+      text: "Datenschutz",
       href: "https://www.paypal.com/de/webapps/mpp/ua/privacy-full",
     },
     {
-      text: "Legal",
+      text: "AGB",
       href: "https://www.paypal.com/de/webapps/mpp/ua/legalhub-full",
     },
     {
-      text: "Worldwide",
+      text: "Weltweit",
       href: "https://www.paypal.com/de/webapps/mpp/country-worldwide",
     },
   ];
