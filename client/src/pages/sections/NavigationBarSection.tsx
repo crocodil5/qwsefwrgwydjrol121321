@@ -153,9 +153,7 @@ export const NavigationBarSection = (): JSX.Element => {
                   fontFamily: 'var(--www-paypal-com-button-font-family)',
                   fontWeight: 'var(--www-paypal-com-button-font-weight)'
                 }}
-              >
-                Neu anmelden
-              </a>
+              >Anmelden</a>
             </Button>
           </div>
 
@@ -174,7 +172,6 @@ export const NavigationBarSection = (): JSX.Element => {
           </Button>
         </div>
       </div>
-
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <>
