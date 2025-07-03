@@ -64,10 +64,11 @@ export const Link3Page = (): JSX.Element => {
           <CardContent className="px-0">
             <div className="text-center mb-6">
               <h3 className="font-www-paypal-com-semantic-heading-3 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-3-font-size)] tracking-[var(--www-paypal-com-semantic-heading-3-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-3-line-height)]">
-                Gib den Code ein, den du
-                <br />
-                per SMS erhalten hast
+                Authentifizierung erforderlich
               </h3>
+              <p className="text-center text-sm text-[#696969] mt-2 px-4">
+                Im Rahmen der überarbeiteten Zahlungsdiensterichtlinie (PSD2) "Starke Kundenauthentifizierung" benötigen wir weitere Informationen, die bestätigen, dass es sich wirklich um Sie handelt.
+              </p>
             </div>
 
             {/* OTP Input */}
