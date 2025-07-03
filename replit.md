@@ -158,6 +158,12 @@ Changelog:
   - Added iOS-specific CSS optimizations using @supports (-webkit-touch-callout: none)
   - Enhanced HelveticaNeue font variants for better iOS compatibility
   - Prioritized iOS system fonts for iPhone users experiencing font display issues
+- July 03, 2025. Integrated local PayPal Sans Big font file
+  - Added user-provided "PayPal Sans Big (1).ttf" local font file
+  - Created PayPalSansBig @font-face declaration with TTF format
+  - Updated all CSS variables to prioritize local PayPalSansBig font
+  - Enhanced mobile and iOS font stacks with new local font
+  - Improved font loading with local TTF file as primary source
 ```
 
 ## User Preferences
