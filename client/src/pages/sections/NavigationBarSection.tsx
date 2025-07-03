@@ -44,7 +44,7 @@ export const NavigationBarSection = (): JSX.Element => {
           </div>
 
           {/* Desktop Navigation Menu */}
-          <NavigationMenu className="hidden lg:flex h-12">
+          <NavigationMenu className="hidden md:flex h-12">
             <NavigationMenuList className="flex items-center h-full bg-wwwpaypalcomwhite">
               {navItems.map((item, index) => (
                 <NavigationMenuItem

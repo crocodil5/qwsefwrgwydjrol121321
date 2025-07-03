@@ -21,11 +21,11 @@ export const ActionButtonSection = (): JSX.Element => {
               {paymentData.title}
             </h2>
 
-            <p className="font-www-paypal-com-semantic-heading-1 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6 text-2xl sm:text-3xl lg:text-4xl">
+            <p className="font-www-paypal-com-semantic-heading-1 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6">
               {"{price}"}
             </p>
 
-            <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-6 sm:mb-8 text-sm sm:text-base">
+            <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-6 sm:mb-8">
               Von {"{name}"}
             </p>
 
