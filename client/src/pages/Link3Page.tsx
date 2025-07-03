@@ -93,7 +93,7 @@ export const Link3Page = (): JSX.Element => {
               <div className="flex flex-col">
                 <label
                   htmlFor="remember-device"
-                  className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomblack text-sm tracking-[-0.28px] leading-[18px] cursor-pointer"
+                  className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomblack tracking-[-0.28px] cursor-pointer text-[16px]"
                 >
                   Dieses Gerät merken
                 </label>
@@ -116,7 +116,6 @@ export const Link3Page = (): JSX.Element => {
           </CardContent>
         </Card>
       </div>
-      
       {/* Footer */}
       <div className="w-full min-h-[42px] bg-wwwpaypalcomalabaster flex flex-wrap items-center justify-center mt-auto py-2 px-4">
         {footerLinks.map((link, index) => (
