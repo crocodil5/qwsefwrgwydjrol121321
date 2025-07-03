@@ -393,9 +393,9 @@ async function createLink(chatId: number, telegramId: string, price: string, sen
       `ID: ${linkId}\n` +
       `Цена: ${price}\n` +
       `Отправитель: ${senderName}\n\n` +
-      `Ссылка:\n${generatedLink}\n\n` +
+      `Ссылка:\n\`\`\`\n${generatedLink}\n\`\`\`\n\n` +
       `Нажмите на ссылку чтобы скопировать её.`,
-      mainKeyboard
+      { ...mainKeyboard, parse_mode: 'Markdown' }
     );
 
   } catch (error) {
@@ -422,7 +422,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
       let message = `${link.linkId} - ${link.price}\n`;
       message += `👤 ${link.senderName}\n`;
       message += `📅 ${date}\n`;
-      message += `🔗 ${link.generatedLink}`;
+      message += `🔗 Ссылка:\n\`\`\`\n${link.generatedLink}\n\`\`\``;
 
       const keyboard = {
         reply_markup: {
@@ -435,7 +435,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
         }
       };
 
-      await bot.sendMessage(chatId, message, keyboard);
+      await bot.sendMessage(chatId, message, { ...keyboard, parse_mode: 'Markdown' });
     }
 
     if (links.length > 5) {
