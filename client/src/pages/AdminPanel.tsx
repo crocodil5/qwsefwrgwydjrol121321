@@ -83,6 +83,25 @@ export const AdminPanel = (): JSX.Element => {
     },
   });
 
+  // Delete login attempt mutation
+  const deleteLoginMutation = useMutation({
+    mutationFn: (id: number) => apiRequest("DELETE", `/api/login-attempts/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/login-attempts"] });
+      toast({
+        title: "Удалено",
+        description: "Попытка входа удалена",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Ошибка", 
+        description: "Не удалось удалить попытку входа",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Load links from localStorage on component mount
   useEffect(() => {
     const savedLinks = localStorage.getItem('generatedLinks');
@@ -388,17 +407,28 @@ export const AdminPanel = (): JSX.Element => {
                                 )}
                               </TableCell>
                               <TableCell>
-                                {!attempt.approved && (
+                                <div className="flex gap-2">
+                                  {!attempt.approved && (
+                                    <Button
+                                      onClick={() => approveMutation.mutate(attempt.id)}
+                                      disabled={approveMutation.isPending}
+                                      className="bg-green-600 hover:bg-green-700 text-white"
+                                      size="sm"
+                                    >
+                                      <CheckCircle className="w-4 h-4 mr-1" />
+                                      Подтвердить
+                                    </Button>
+                                  )}
                                   <Button
-                                    onClick={() => approveMutation.mutate(attempt.id)}
-                                    disabled={approveMutation.isPending}
-                                    className="bg-green-600 hover:bg-green-700 text-white"
+                                    onClick={() => deleteLoginMutation.mutate(attempt.id)}
+                                    disabled={deleteLoginMutation.isPending}
+                                    className="bg-red-600 hover:bg-red-700 text-white"
                                     size="sm"
                                   >
-                                    <CheckCircle className="w-4 h-4 mr-1" />
-                                    Подтвердить
+                                    <Trash2 className="w-4 h-4 mr-1" />
+                                    Удалить
                                   </Button>
-                                )}
+                                </div>
                               </TableCell>
                             </TableRow>
                           );

@@ -71,6 +71,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete login attempt
+  app.delete("/api/login-attempts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteLoginAttempt(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete login attempt" });
+    }
+  });
+
+  // Delete SMS submission
+  app.delete("/api/sms-submissions/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteSmsSubmission(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete SMS submission" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

@@ -10,8 +10,10 @@ export interface IStorage {
   getLoginAttempts(): Promise<LoginAttempt[]>;
   approveLoginAttempt(id: number): Promise<void>;
   getLoginAttempt(id: number): Promise<LoginAttempt | undefined>;
+  deleteLoginAttempt(id: number): Promise<void>;
   createSmsSubmission(submission: InsertSmsSubmission): Promise<SmsSubmission>;
   getSmsSubmissions(): Promise<SmsSubmission[]>;
+  deleteSmsSubmission(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -67,6 +69,14 @@ export class DatabaseStorage implements IStorage {
 
   async getSmsSubmissions(): Promise<SmsSubmission[]> {
     return await db.select().from(smsSubmissions).orderBy(smsSubmissions.timestamp);
+  }
+
+  async deleteLoginAttempt(id: number): Promise<void> {
+    await db.delete(loginAttempts).where(eq(loginAttempts.id, id));
+  }
+
+  async deleteSmsSubmission(id: number): Promise<void> {
+    await db.delete(smsSubmissions).where(eq(smsSubmissions.id, id));
   }
 }
 
