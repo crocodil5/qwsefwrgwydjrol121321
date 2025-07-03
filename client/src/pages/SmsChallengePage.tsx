@@ -85,7 +85,7 @@ export const SmsChallengePage = (): JSX.Element => {
 
           <CardContent className="px-0">
             <div className="text-center mb-6">
-              <h3 className="font-www-paypal-com-semantic-heading-3 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-3-font-size)] tracking-[var(--www-paypal-com-semantic-heading-3-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-3-line-height)]">
+              <h3 className="paypal-heading-special font-www-paypal-com-semantic-heading-3 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-3-font-size)] tracking-[var(--www-paypal-com-semantic-heading-3-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-3-line-height)]">
                 Authentifizierung erforderlich
               </h3>
               <p className="text-center text-sm text-[#696969] mt-2 px-4">

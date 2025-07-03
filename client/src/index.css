@@ -214,22 +214,22 @@ only screen
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
-/* SmsChallengePage - Force standard system fonts on iPhone/iOS */
+/* SmsChallengePage - Force standard system fonts on iPhone/iOS except special heading */
 .sms-page-container,
-.sms-page-container * {
+.sms-page-container *:not(.paypal-heading-special) {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 /* Additional iOS/iPhone specific overrides for SMS page */
 @supports (-webkit-touch-callout: none) {
   .sms-page-container,
-  .sms-page-container *,
+  .sms-page-container *:not(.paypal-heading-special),
   .sms-page-container input,
   .sms-page-container button,
   .sms-page-container label,
   .sms-page-container a,
   .sms-page-container span,
-  .sms-page-container h3,
+  .sms-page-container h3:not(.paypal-heading-special),
   .sms-page-container p {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     -webkit-font-smoothing: antialiased;
@@ -258,18 +258,27 @@ only screen
   and (device-width: 428px) 
   and (device-height: 926px) 
   and (-webkit-device-pixel-ratio: 3) {
-  .sms-page-container * {
+  .sms-page-container *:not(.paypal-heading-special) {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   }
 }
 
-/* Override all Tailwind font classes within SmsChallengePage */
-.sms-page-container .font-www-paypal-com-semantic-heading-3,
+/* Override all Tailwind font classes within SmsChallengePage except special heading */
 .sms-page-container .font-www-paypal-com-semantic-label,
 .sms-page-container .font-www-paypal-com-helvetica-neue-regular,
 .sms-page-container .font-www-paypal-com-helvetica-neue-medium,
 .sms-page-container .font-www-paypal-com-helvetica-neue-bold,
 .sms-page-container .font-www-paypal-com-button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+/* Exception: Keep PayPal Sans Big for special heading */
+.sms-page-container .paypal-heading-special {
+  font-family: var(--www-paypal-com-semantic-heading-3-font-family) !important;
+}
+
+/* Override other heading-3 elements that don't have the special class */
+.sms-page-container .font-www-paypal-com-semantic-heading-3:not(.paypal-heading-special) {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
