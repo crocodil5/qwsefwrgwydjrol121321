@@ -104,7 +104,11 @@ export const NavigationBarSection = (): JSX.Element => {
                 href="https://www.paypal.com/de/webapps/mpp/account-selection"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomwhite text-[14px] lg:text-[17.7px] text-right tracking-[0] leading-6"
+                className="text-wwwpaypalcomwhite text-[14px] lg:text-[17.7px] text-right tracking-[0] leading-6"
+                style={{ 
+                  fontFamily: 'var(--www-paypal-com-button-font-family)',
+                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                }}
               >
                 Anmelden
               </a>
@@ -175,7 +179,11 @@ export const NavigationBarSection = (): JSX.Element => {
                     href="https://www.paypal.com/signin"
                     rel="noopener noreferrer"
                     target="_blank"
-                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[16px]"
+                    className="text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[16px]"
+                    style={{ 
+                      fontFamily: 'var(--www-paypal-com-button-font-family)',
+                      fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Einloggen
@@ -190,7 +198,11 @@ export const NavigationBarSection = (): JSX.Element => {
                     href="https://www.paypal.com/de/webapps/mpp/account-selection"
                     rel="noopener noreferrer"
                     target="_blank"
-                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomwhite text-[16px] tracking-[0] leading-[16px]"
+                    className="text-wwwpaypalcomwhite text-[16px] tracking-[0] leading-[16px]"
+                    style={{ 
+                      fontFamily: 'var(--www-paypal-com-button-font-family)',
+                      fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Neu anmelden
