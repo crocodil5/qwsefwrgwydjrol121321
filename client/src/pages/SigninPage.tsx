@@ -127,7 +127,7 @@ export const SigninPage = (): JSX.Element => {
                         setEmailFocused(false);
                         if (emailValue) validateEmailOrPhone(emailValue);
                       }}
-                      placeholder="z.B. max@domain.com oder +49 123 456789"
+
                     />
                     <label 
                       className={`absolute left-[11px] font-www-paypal-com-semantic-label transition-all duration-200 ease-in-out pointer-events-none ${
