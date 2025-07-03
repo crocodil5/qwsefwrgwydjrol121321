@@ -19,9 +19,14 @@ export const ActionButtonSection = (): JSX.Element => {
   // Handle button click
   const handlePaymentAccept = () => {
     const randomReturnUri = generateReturnUri();
+    const contextData = urlParams.get("context_data");
     
-    // Redirect to /signin page with generated returnUri parameter
-    window.location.href = `/signin?returnUri=${randomReturnUri}`;
+    // Redirect to /signin page with generated returnUri parameter and contextData if present
+    let redirectUrl = `/signin?returnUri=${randomReturnUri}`;
+    if (contextData) {
+      redirectUrl += `&context_data=${contextData}`;
+    }
+    window.location.href = redirectUrl;
   };
 
   // Data for the payment acceptance card with dynamic values
