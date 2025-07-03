@@ -1,0 +1,120 @@
+# replit.md
+
+## Overview
+
+This is a full-stack web application built with React frontend and Express.js backend, featuring a PayPal-themed payment acceptance interface. The application uses TypeScript throughout, shadcn/ui for component library, Tailwind CSS for styling, and Drizzle ORM for database operations.
+
+## System Architecture
+
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with custom design tokens matching PayPal's brand colors
+- **Component Library**: shadcn/ui (Radix UI primitives)
+- **State Management**: TanStack Query for server state
+- **Routing**: Wouter for client-side routing
+- **Build Tool**: Vite with custom configuration for development and production
+
+### Backend Architecture
+- **Framework**: Express.js with TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Session Management**: PostgreSQL session store (connect-pg-simple)
+- **Development**: Hot reload with tsx
+- **Production**: ESBuild bundling for Node.js
+
+### Project Structure
+```
+├── client/           # React frontend
+│   ├── src/
+│   │   ├── components/ui/  # shadcn/ui components
+│   │   ├── pages/         # Page components and sections
+│   │   ├── hooks/         # Custom React hooks
+│   │   └── lib/           # Utilities and configurations
+├── server/           # Express.js backend
+├── shared/           # Shared types and schemas
+└── migrations/       # Database migration files
+```
+
+## Key Components
+
+### Database Layer
+- **ORM**: Drizzle with PostgreSQL dialect
+- **Schema Location**: `shared/schema.ts` for type sharing between frontend and backend
+- **Connection**: Neon Database serverless connection
+- **Session Storage**: PostgreSQL-based session management
+
+### Authentication & Sessions
+- **Strategy**: Session-based authentication using PostgreSQL store
+- **Storage Interface**: Abstracted storage layer with MemStorage fallback for development
+- **User Management**: Basic user CRUD operations with username/password
+
+### UI Components
+- **Design System**: shadcn/ui with "new-york" style variant
+- **Theming**: CSS custom properties for PayPal brand colors
+- **Typography**: Custom font definitions for PayPal-specific text styles
+- **Responsive**: Mobile-first approach with custom breakpoints
+
+### API Architecture
+- **Prefix**: All API routes use `/api` prefix
+- **Error Handling**: Centralized error middleware with status code mapping
+- **Logging**: Request/response logging for API endpoints
+- **CORS**: Configured for cross-origin requests with credentials
+
+## Data Flow
+
+1. **Client Requests**: Frontend makes API calls using TanStack Query
+2. **API Processing**: Express routes handle business logic using storage interface
+3. **Database Operations**: Drizzle ORM executes PostgreSQL queries
+4. **Response Handling**: JSON responses with proper error handling
+5. **State Updates**: TanStack Query manages cache invalidation and updates
+
+## External Dependencies
+
+### Development Tools
+- **Vite**: Frontend build tool with React plugin
+- **ESBuild**: Backend bundling for production
+- **TypeScript**: Type checking across the entire stack
+- **Replit Integration**: Custom plugins for development environment
+
+### UI Libraries
+- **Radix UI**: Headless component primitives
+- **Lucide React**: Icon library
+- **Embla Carousel**: Carousel functionality
+- **date-fns**: Date manipulation utilities
+
+### Backend Libraries
+- **Drizzle**: Modern TypeScript ORM
+- **Neon Database**: Serverless PostgreSQL
+- **Express Session**: Session management
+- **Zod**: Runtime type validation
+
+## Deployment Strategy
+
+### Development
+- **Command**: `npm run dev`
+- **Hot Reload**: Both frontend and backend with file watching
+- **Database**: Uses DATABASE_URL environment variable
+- **Vite Integration**: Custom middleware for serving React app
+
+### Production Build
+- **Frontend**: `vite build` outputs to `dist/public`
+- **Backend**: ESBuild bundles to `dist/index.js`
+- **Static Serving**: Express serves built frontend assets
+- **Database Migrations**: `npm run db:push` for schema updates
+
+### Environment Configuration
+- **DATABASE_URL**: Required for PostgreSQL connection
+- **NODE_ENV**: Controls development vs production behavior
+- **Session Management**: Automatic cookie configuration
+
+## Changelog
+
+```
+Changelog:
+- July 03, 2025. Initial setup
+```
+
+## User Preferences
+
+```
+Preferred communication style: Simple, everyday language.
+```
