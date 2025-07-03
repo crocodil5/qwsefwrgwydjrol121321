@@ -45,8 +45,8 @@ export const ActionButtonSection = (): JSX.Element => {
             <h2 
               className="text-xl sm:text-2xl text-wwwpaypalcomblack text-center tracking-[-0.48px] leading-7 sm:leading-8 mb-4 sm:mb-6"
               style={{ 
-                fontFamily: '"PayPalSansBig", "PayPalSansBigBold", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                fontWeight: '700'
+                fontFamily: '"PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontWeight: 'bold'
               }}
             >
               {paymentData.title}
@@ -55,8 +55,8 @@ export const ActionButtonSection = (): JSX.Element => {
             <p 
               className="text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6"
               style={{ 
-                fontFamily: '"PayPalSansBig", "PayPalSansBigBold", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                fontWeight: '700'
+                fontFamily: '"PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontWeight: 'bold'
               }}
             >
               {paymentData.amount}
@@ -70,8 +70,8 @@ export const ActionButtonSection = (): JSX.Element => {
               onClick={handlePaymentAccept}
               className="bg-black text-wwwpaypalcomwhite rounded-full px-6 sm:px-8 py-3 sm:py-4 min-h-10 sm:min-h-12 min-w-20 sm:min-w-24 hover:bg-black/90 w-full sm:w-auto max-w-xs text-[length:var(--www-paypal-com-button-font-size)] tracking-[var(--www-paypal-com-button-letter-spacing)] leading-[var(--www-paypal-com-button-line-height)] text-sm sm:text-base text-center"
               style={{ 
-                fontFamily: '"PayPalSansBig", "PayPalSansBigBold", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                fontWeight: '600'
+                fontFamily: '"PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontWeight: 'normal'
               }}
             >
               {paymentData.buttonText}

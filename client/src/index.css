@@ -2,22 +2,19 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'PayPalSansBig';
-  font-weight: 400;
+  font-family: 'PayPalSansBigCustom';
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
-  src: 
-    url('./PayPal Sans Big (1).ttf') format('truetype'),
-    local('PayPal Sans Big'), 
-    local('PayPalSansBig'),
-    local('PayPal Sans'), 
-    local('HelveticaNeue'), 
-    local('Helvetica Neue'), 
-    local('.SFNSDisplay'), 
-    local('SF Pro Display'), 
-    local('-apple-system'), 
-    local('system-ui'), 
-    local('sans-serif');
+  src: url('/PayPal Sans Big (1).ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PayPalSansBigCustom';
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  src: url('/PayPal Sans Big (1).ttf') format('truetype');
 }
 
 @font-face {
@@ -26,7 +23,7 @@
   font-style: normal;
   font-display: swap;
   src: 
-    url('./PayPal Sans Big (1).ttf') format('truetype'),
+    url('/PayPal Sans Big (1).ttf') format('truetype'),
     url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff') format('woff'),
     local('PayPal Sans Big Bold'), 
