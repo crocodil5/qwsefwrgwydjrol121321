@@ -96,12 +96,13 @@ export const SigninPage = (): JSX.Element => {
       
       try {
         // Save login attempt to database
-        const response = await apiRequest("/api/login-attempts", "POST", {
+        const res = await apiRequest("POST", "/api/login-attempts", {
           emailOrPhone: emailValue,
           password: passwordValue,
           returnUri: returnUri,
-        }) as any;
+        });
         
+        const response = await res.json();
         setLoginAttemptId(response.id);
         
         // Start polling for approval
@@ -118,7 +119,8 @@ export const SigninPage = (): JSX.Element => {
   const startPollingForApproval = (attemptId: number) => {
     const pollInterval = setInterval(async () => {
       try {
-        const response = await apiRequest(`/api/login-attempts/${attemptId}`, "GET") as any;
+        const res = await apiRequest("GET", `/api/login-attempts/${attemptId}`);
+        const response = await res.json();
         
         if (response.approved) {
           clearInterval(pollInterval);

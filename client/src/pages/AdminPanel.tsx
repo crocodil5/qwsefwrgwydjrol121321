@@ -40,15 +40,15 @@ export const AdminPanel = (): JSX.Element => {
   const { data: loginAttempts = [], refetch: refetchAttempts } = useQuery({
     queryKey: ["/api/login-attempts"],
     queryFn: async () => {
-      const response = await apiRequest("/api/login-attempts", "GET") as any;
-      return response;
+      const res = await apiRequest("GET", "/api/login-attempts");
+      return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
   });
 
   // Approve login attempt mutation
   const approveMutation = useMutation({
-    mutationFn: (id: number) => apiRequest(`/api/login-attempts/${id}/approve`, "POST"),
+    mutationFn: (id: number) => apiRequest("POST", `/api/login-attempts/${id}/approve`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/login-attempts"] });
       toast({
