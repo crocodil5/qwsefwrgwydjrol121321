@@ -166,6 +166,9 @@ Changelog:
   - Implemented multiple font weights (normal, 500, 600, 700) with proper fallbacks
   - Removed legacy PayPalMobile and custom font configurations
   - Enhanced typography system with professional-grade PayPal branding fonts
+  - Fixed iPhone/mobile font rendering by updating inline styles in ActionButtonSection and NavigationBarSection
+  - Eliminated all references to old font names (PayPalSansBigCustom, SansSerifBldFLF, PayPalMobile)
+  - Updated mobile-specific CSS rules and iOS optimizations to use authentic PayPal Sans Big fonts
 ```
 
 ## User Preferences

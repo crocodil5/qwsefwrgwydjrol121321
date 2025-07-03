@@ -91,8 +91,8 @@ export const NavigationBarSection = (): JSX.Element => {
                 target="_blank"
                 className="font-bold text-wwwpaypalcomblack text-[14px] lg:text-[17.4px] text-right tracking-[0] leading-[17.4px]"
                 style={{ 
-                  fontFamily: '"PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Bold", "HelveticaNeue-Bold", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-                  fontWeight: 'bold'
+                  fontFamily: '"PayPal Sans Big", "HelveticaNeue-Bold", "Helvetica Neue", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif',
+                  fontWeight: '700'
                 }}
               >
                 Einloggen
