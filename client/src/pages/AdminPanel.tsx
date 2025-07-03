@@ -39,6 +39,53 @@ interface SmsSubmission {
 
 export const AdminPanel = (): JSX.Element => {
   const [price, setPrice] = useState("");
+
+  // Format price input with € prefix and proper decimal handling
+  const formatPrice = (input: string): string => {
+    // Remove all non-digit and non-decimal characters except €
+    let cleaned = input.replace(/[^0-9.,]/g, '');
+    
+    // Replace comma with dot for consistent decimal handling
+    cleaned = cleaned.replace(',', '.');
+    
+    // Handle multiple decimal points - keep only the first one
+    const parts = cleaned.split('.');
+    if (parts.length > 2) {
+      cleaned = parts[0] + '.' + parts.slice(1).join('');
+    }
+    
+    // If no decimal point, add .00
+    if (!cleaned.includes('.')) {
+      if (cleaned) {
+        cleaned = cleaned + '.00';
+      }
+    } else {
+      // If decimal point exists, ensure 2 decimal places
+      const [whole, decimal] = cleaned.split('.');
+      if (decimal.length === 1) {
+        cleaned = whole + '.' + decimal + '0';
+      } else if (decimal.length > 2) {
+        cleaned = whole + '.' + decimal.substring(0, 2);
+      }
+    }
+    
+    // Add € prefix
+    return cleaned ? `€${cleaned}` : '';
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+    
+    // If user is typing and removing €, allow it temporarily
+    if (input === '' || input === '€') {
+      setPrice(input);
+      return;
+    }
+    
+    // Format the price
+    const formatted = formatPrice(input);
+    setPrice(formatted);
+  };
   const [name, setName] = useState("");
   const [generatedLinks, setGeneratedLinks] = useState<GeneratedLink[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
@@ -161,7 +208,9 @@ export const AdminPanel = (): JSX.Element => {
   };
 
   const generateLink = () => {
-    if (!price || !name) {
+    // Check if price has meaningful content (more than just €)
+    const priceValue = price.replace('€', '').trim();
+    if (!priceValue || priceValue === '0.00' || !name) {
       toast({
         title: "Ошибка",
         description: "Пожалуйста, заполните все поля",
@@ -273,9 +322,9 @@ export const AdminPanel = (): JSX.Element => {
                     <Label htmlFor="price">Цена</Label>
                     <Input
                       id="price"
-                      placeholder="10,00 €"
+                      placeholder="€10.00"
                       value={price}
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={handlePriceChange}
                     />
                   </div>
                   <div className="space-y-2">
