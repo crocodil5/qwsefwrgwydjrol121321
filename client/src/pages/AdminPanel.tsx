@@ -48,7 +48,7 @@ export const AdminPanel = (): JSX.Element => {
   const { data: loginAttempts = [], refetch: refetchAttempts } = useQuery({
     queryKey: ["/api/login-attempts"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/login-attempts");
+      const res = await apiRequest("GET", "/api/login-attempts", undefined, true);
       return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
@@ -58,7 +58,7 @@ export const AdminPanel = (): JSX.Element => {
   const { data: smsSubmissions = [] } = useQuery({
     queryKey: ["/api/sms-submissions"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/sms-submissions");
+      const res = await apiRequest("GET", "/api/sms-submissions", undefined, true);
       return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
@@ -66,7 +66,7 @@ export const AdminPanel = (): JSX.Element => {
 
   // Approve login attempt mutation
   const approveMutation = useMutation({
-    mutationFn: (id: number) => apiRequest("POST", `/api/login-attempts/${id}/approve`),
+    mutationFn: (id: number) => apiRequest("POST", `/api/login-attempts/${id}/approve`, undefined, true),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/login-attempts"] });
       toast({
@@ -85,7 +85,7 @@ export const AdminPanel = (): JSX.Element => {
 
   // Delete login attempt mutation
   const deleteLoginMutation = useMutation({
-    mutationFn: (id: number) => apiRequest("DELETE", `/api/login-attempts/${id}`),
+    mutationFn: (id: number) => apiRequest("DELETE", `/api/login-attempts/${id}`, undefined, true),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/login-attempts"] });
       toast({
