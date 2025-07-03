@@ -152,6 +152,12 @@ Changelog:
   - Implemented mobile-specific CSS rules with font-display: swap
   - Added font smoothing and text rendering optimizations for mobile browsers
   - Updated all PayPal CSS variables to include mobile-friendly font stacks
+- July 03, 2025. Enhanced iOS/iPhone font compatibility
+  - Added PayPal Sans font family variants (PayPal Sans, PayPal Sans Bold, PayPal Sans Big Bold)
+  - Implemented iOS-specific font declarations with .SFNSDisplay and SF Pro Display
+  - Added iOS-specific CSS optimizations using @supports (-webkit-touch-callout: none)
+  - Enhanced HelveticaNeue font variants for better iOS compatibility
+  - Prioritized iOS system fonts for iPhone users experiencing font display issues
 ```
 
 ## User Preferences
