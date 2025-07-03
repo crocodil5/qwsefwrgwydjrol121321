@@ -7,8 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { LogOut } from "lucide-react";
 
 export const AdminPanel = (): JSX.Element => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginError, setLoginError] = useState("");
+
   const [payments, setPayments] = useState([
     { id: 1, amount: "1,00 €", sender: "Nina Pflaum", status: "pending", date: "2024-01-15" },
     { id: 2, amount: "25,50 €", sender: "Max Mueller", status: "completed", date: "2024-01-14" },
@@ -19,6 +25,23 @@ export const AdminPanel = (): JSX.Element => {
     amount: "",
     sender: "",
   });
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    
+    if (loginData.username === "crocs" && loginData.password === "crocswork") {
+      setIsAuthenticated(true);
+      setLoginData({ username: "", password: "" });
+    } else {
+      setLoginError("Неверный логин или пароль");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setLoginData({ username: "", password: "" });
+  };
 
   const handleAddPayment = () => {
     if (newPayment.amount && newPayment.sender) {
@@ -49,12 +72,64 @@ export const AdminPanel = (): JSX.Element => {
     return <Badge variant={variants[status] || "default"}>{status}</Badge>;
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-center">Вход в админ панель</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="username">Логин</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={loginData.username}
+                  onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                  placeholder="Введите логин"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Пароль</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={loginData.password}
+                  onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                  placeholder="Введите пароль"
+                  required
+                />
+              </div>
+              {loginError && (
+                <Alert variant="destructive">
+                  <AlertDescription>{loginError}</AlertDescription>
+                </Alert>
+              )}
+              <Button type="submit" className="w-full">
+                Войти
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Panel</h1>
-          <p className="text-gray-600">Управление платежами и настройками</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Panel</h1>
+            <p className="text-gray-600">Управление платежами и настройками</p>
+          </div>
+          <Button onClick={handleLogout} variant="outline" size="sm">
+            <LogOut className="w-4 h-4 mr-2" />
+            Выйти
+          </Button>
         </div>
 
         <Tabs defaultValue="payments" className="space-y-6">
