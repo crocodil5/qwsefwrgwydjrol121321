@@ -44,7 +44,7 @@ export const Link2Page = (): JSX.Element => {
                   <img
                     className="relative w-[83.44px] h-[29.67px]"
                     alt="PayPal Logo"
-                    src="/figmaAssets/component-1-4.svg"
+                    src="/figmaAssets/paypallogo.svg"
                   />
                 </div>
               </div>
