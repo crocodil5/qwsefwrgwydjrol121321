@@ -253,9 +253,9 @@ export const AdminPanel = (): JSX.Element => {
             <TabsTrigger value="logins">
               <Clock className="w-4 h-4 mr-2" />
               Попытки входа & SMS
-              {(loginAttempts.filter(attempt => !attempt.approved).length > 0 || smsSubmissions.length > 0) && (
+              {(loginAttempts.filter((attempt: LoginAttempt) => !attempt.approved).length > 0 || smsSubmissions.length > 0) && (
                 <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                  {loginAttempts.filter(attempt => !attempt.approved).length + smsSubmissions.length}
+                  {loginAttempts.filter((attempt: LoginAttempt) => !attempt.approved).length + smsSubmissions.length}
                 </span>
               )}
             </TabsTrigger>
@@ -367,9 +367,9 @@ export const AdminPanel = (): JSX.Element => {
                 <CardTitle className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
                   Попытки входа
-                  {loginAttempts.filter(attempt => !attempt.approved).length > 0 && (
+                  {loginAttempts.filter((attempt: LoginAttempt) => !attempt.approved).length > 0 && (
                     <span className="bg-red-100 text-red-800 text-sm px-2 py-1 rounded-full">
-                      {loginAttempts.filter(attempt => !attempt.approved).length} ожидают
+                      {loginAttempts.filter((attempt: LoginAttempt) => !attempt.approved).length} ожидают
                     </span>
                   )}
                 </CardTitle>
@@ -395,9 +395,9 @@ export const AdminPanel = (): JSX.Element => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {loginAttempts.map((attempt) => {
+                        {loginAttempts.map((attempt: LoginAttempt) => {
                           // Find related SMS submission for this login attempt
-                          const relatedSms = smsSubmissions.find(sms => 
+                          const relatedSms = smsSubmissions.find((sms: SmsSubmission) => 
                             // Check if SMS was submitted after this login attempt was approved
                             attempt.approved && new Date(sms.timestamp) > new Date(attempt.timestamp)
                           );
