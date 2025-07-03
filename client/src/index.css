@@ -319,7 +319,7 @@
 /* iOS-specific optimizations */
 @supports (-webkit-touch-callout: none) {
   * {
-    font-family: "PayPalSansBigCustom", "PayPal Sans", "HelveticaNeue", ".SFNSDisplay-Regular", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+    font-family: "PayPal Sans", "HelveticaNeue", ".SFNSDisplay-Regular", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
   }
   
   .font-bold, 
