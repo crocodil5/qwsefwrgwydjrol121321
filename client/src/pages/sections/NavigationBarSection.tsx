@@ -115,13 +115,13 @@ export const NavigationBarSection = (): JSX.Element => {
           <Button
             variant="ghost"
             size="sm"
-            className="sm:hidden ml-2 p-2"
+            className="sm:hidden ml-2 p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95 active:bg-gray-200"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 transition-transform duration-200" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 transition-transform duration-200" />
             )}
           </Button>
         </div>
@@ -129,7 +129,7 @@ export const NavigationBarSection = (): JSX.Element => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden w-full bg-wwwpaypalcomwhite border-t border-[#cccccc]">
+        <div className="sm:hidden w-full bg-wwwpaypalcomwhite border-t border-[#cccccc] animate-in slide-in-from-top-2 duration-200">
           <div className="px-4 py-4 space-y-4">
             {/* Mobile Navigation Links */}
             {navItems.map((item, index) => (
