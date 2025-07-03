@@ -1,0 +1,149 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --www-paypal-com-helvetica-neue-bold-font-family: "Helvetica Neue", Helvetica;
+  --www-paypal-com-helvetica-neue-bold-font-size: 17.4375px;
+  --www-paypal-com-helvetica-neue-bold-font-style: normal;
+  --www-paypal-com-helvetica-neue-bold-font-weight: 700;
+  --www-paypal-com-helvetica-neue-bold-letter-spacing: 0px;
+  --www-paypal-com-helvetica-neue-bold-line-height: 24px;
+  --www-paypal-com-helvetica-neue-medium-font-family: "Helvetica Neue",
+    Helvetica;
+  --www-paypal-com-helvetica-neue-medium-font-size: 15.625px;
+  --www-paypal-com-helvetica-neue-medium-font-style: normal;
+  --www-paypal-com-helvetica-neue-medium-font-weight: 500;
+  --www-paypal-com-helvetica-neue-medium-letter-spacing: 0px;
+  --www-paypal-com-helvetica-neue-medium-line-height: 25.600000381469727px;
+  --www-paypal-com-helvetica-neue-regular-font-family: "Helvetica Neue",
+    Helvetica;
+  --www-paypal-com-helvetica-neue-regular-font-size: 14px;
+  --www-paypal-com-helvetica-neue-regular-font-style: normal;
+  --www-paypal-com-helvetica-neue-regular-font-weight: 400;
+  --www-paypal-com-helvetica-neue-regular-letter-spacing: -0.2800000011920929px;
+  --www-paypal-com-helvetica-neue-regular-line-height: 18px;
+  --www-paypal-com-helvetica-regular-font-family: "Helvetica", Helvetica;
+  --www-paypal-com-helvetica-regular-font-size: 18px;
+  --www-paypal-com-helvetica-regular-font-style: normal;
+  --www-paypal-com-helvetica-regular-font-weight: 400;
+  --www-paypal-com-helvetica-regular-letter-spacing: 0px;
+  --www-paypal-com-helvetica-regular-line-height: 20.700000762939453px;
+  --www-paypal-com-semantic-heading-1-font-family: "Helvetica Neue", Helvetica;
+  --www-paypal-com-semantic-heading-1-font-size: 64px;
+  --www-paypal-com-semantic-heading-1-font-style: normal;
+  --www-paypal-com-semantic-heading-1-font-weight: 400;
+  --www-paypal-com-semantic-heading-1-letter-spacing: -2.559999942779541px;
+  --www-paypal-com-semantic-heading-1-line-height: 70px;
+  --www-paypal-com-semantic-heading-4-font-family: "Helvetica Neue", Helvetica;
+  --www-paypal-com-semantic-heading-4-font-size: 16px;
+  --www-paypal-com-semantic-heading-4-font-style: normal;
+  --www-paypal-com-semantic-heading-4-font-weight: 400;
+  --www-paypal-com-semantic-heading-4-letter-spacing: -0.1599999964237213px;
+  --www-paypal-com-semantic-heading-4-line-height: 20px;
+  --www-paypal-com-semantic-item-font-family: "Helvetica Neue", Helvetica;
+  --www-paypal-com-semantic-item-font-size: 14px;
+  --www-paypal-com-semantic-item-font-style: normal;
+  --www-paypal-com-semantic-item-font-weight: 400;
+  --www-paypal-com-semantic-item-letter-spacing: 0.3499999940395355px;
+  --www-paypal-com-semantic-item-line-height: 22px;
+  --wwwpaypalcomazure-radiance: rgba(0, 140, 255, 1);
+  --wwwpaypalcomblack: rgba(0, 0, 0, 1);
+  --wwwpaypalcomcobalt: rgba(5, 81, 181, 1);
+  --wwwpaypalcomdove-gray: rgba(105, 105, 105, 1);
+  --wwwpaypalcomendeavour: rgba(0, 94, 166, 1);
+  --wwwpaypalcommalibu: rgba(96, 205, 255, 1);
+  --wwwpaypalcommine-shaft: rgba(51, 51, 51, 1);
+  --wwwpaypalcomresolution-blue: rgba(0, 41, 145, 1);
+  --wwwpaypalcomsilver: rgba(204, 204, 204, 1);
+  --wwwpaypalcomwhite: rgba(255, 255, 255, 1);
+  --wwwpaypalcomwhite-white-lilac: rgba(255, 255, 255, 1);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: transparent;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: transparent;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
