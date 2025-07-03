@@ -1,6 +1,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'SansSerifBldFLF';
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
+  src: local('Arial Black'), local('Helvetica-Bold'), local('sans-serif');
+}
+
 @layer components {
   .all-\[unset\] {
     all: unset;
@@ -88,10 +96,10 @@
   --wwwpaypalcomshuttle-gray: rgba(84, 93, 104, 1);
   --wwwpaypalcomdusty-gray: rgba(153, 153, 153, 1);
   --wwwpaypalcomiron: rgba(203, 210, 214, 1);
-  --www-paypal-com-semantic-heading-3-font-family: "Helvetica Neue", Helvetica;
+  --www-paypal-com-semantic-heading-3-font-family: "SansSerifBldFLF", "Helvetica Neue", Helvetica;
   --www-paypal-com-semantic-heading-3-font-size: 24px;
   --www-paypal-com-semantic-heading-3-font-style: normal;
-  --www-paypal-com-semantic-heading-3-font-weight: 400;
+  --www-paypal-com-semantic-heading-3-font-weight: 700;
   --www-paypal-com-semantic-heading-3-letter-spacing: -0.47999998927116394px;
   --www-paypal-com-semantic-heading-3-line-height: 32px;
   --www-paypal-com-semantic-link-underline-font-family: "Helvetica Neue", Helvetica;
