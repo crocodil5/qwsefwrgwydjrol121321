@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import { ElementDefault } from "@/pages/ElementDefault";
 import { Link2Page } from "@/pages/Link2Page";
 import { Link3Page } from "@/pages/Link3Page";
+import { AdminPanel } from "@/pages/AdminPanel";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/" component={ElementDefault} />
       <Route path="/link2" component={Link2Page} />
       <Route path="/link3" component={Link3Page} />
+      <Route path="/admin" component={AdminPanel} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
