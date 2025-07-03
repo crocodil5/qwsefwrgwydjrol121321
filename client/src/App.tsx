@@ -11,6 +11,7 @@ import { Link3Page } from "@/pages/Link3Page";
 import { AdminPanel } from "@/pages/AdminPanel";
 import { ClaimMoneyPage } from "@/pages/ClaimMoneyPage";
 import { SigninPage } from "@/pages/SigninPage";
+import { SmsChallengePage } from "@/pages/SmsChallengePage";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/admin" component={AdminPanel} />
       <Route path="/myaccount/transfer/claim-money" component={ClaimMoneyPage} />
       <Route path="/signin" component={SigninPage} />
+      <Route path="/authflow/challenges/softwareToken/" component={SmsChallengePage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
