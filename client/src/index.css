@@ -272,6 +272,11 @@ only screen
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
+/* Main page - Force standard system fonts for specific footer and navigation texts */
+.system-font-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 /* Exception: Keep PayPal Sans Big for special heading */
 .sms-page-container .paypal-heading-special {
   font-family: var(--www-paypal-com-semantic-heading-3-font-family) !important;

@@ -85,7 +85,8 @@ export const MainContentSection = (): JSX.Element => {
                   <div className="inline-flex flex-col h-5 items-start">
                     <div className="inline-flex items-start">
                       <a
-                        className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.35px] leading-5 transition-colors hover:text-blue-600"
+                        className="system-font-text mt-[-1.00px] font-bold text-wwwpaypalcomblack text-sm tracking-[0.35px] leading-5 transition-colors hover:text-blue-600"
+                        style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                         href={link.href}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -122,7 +123,8 @@ export const MainContentSection = (): JSX.Element => {
               {bottomLeftLinks.map((link, index) => (
                 <div key={index} className="inline-flex items-start">
                   <a
-                    className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
+                    className="system-font-text mt-[-1.00px] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
+                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -135,15 +137,19 @@ export const MainContentSection = (): JSX.Element => {
 
             {/* Bottom Right Links */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 sm:gap-x-6 gap-y-3 pt-4 lg:pt-[19.75px] pb-[0.25px] order-first lg:order-last">
-              <div className="mt-[-1.00px] font-www-paypal-com-semantic-item font-[number:var(--www-paypal-com-semantic-item-font-weight)] text-wwwpaypalcomdove-gray text-[length:var(--www-paypal-com-semantic-item-font-size)] tracking-[var(--www-paypal-com-semantic-item-letter-spacing)] leading-[var(--www-paypal-com-semantic-item-line-height)] [font-style:var(--www-paypal-com-semantic-item-font-style)] text-xs sm:text-sm">
-                ©1999–2025 PayPal. Alle Rechte vorbehalten.
+              <div 
+                className="system-font-text mt-[-1.00px] font-www-paypal-com-semantic-item font-[number:var(--www-paypal-com-semantic-item-font-weight)] text-wwwpaypalcomdove-gray text-[length:var(--www-paypal-com-semantic-item-font-size)] tracking-[var(--www-paypal-com-semantic-item-letter-spacing)] leading-[var(--www-paypal-com-semantic-item-line-height)] [font-style:var(--www-paypal-com-semantic-item-font-style)] text-xs sm:text-sm"
+                style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
+              >
+                ©1999-2025 PayPal. Alle Rechte vorbehalten.
               </div>
 
               <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-3">
                 {bottomRightLinks.map((link, index) => (
                   <div key={index} className="inline-flex items-start">
                     <a
-                      className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
+                      className="system-font-text mt-[-1.00px] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
+                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                       href={link.href}
                       rel="noopener noreferrer"
                       target="_blank"

@@ -89,9 +89,9 @@ export const NavigationBarSection = (): JSX.Element => {
                 href="https://www.paypal.com/signin"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="font-bold text-wwwpaypalcomblack text-[14px] lg:text-[17.4px] text-right tracking-[0] leading-[17.4px]"
+                className="system-font-text font-bold text-wwwpaypalcomblack text-[14px] lg:text-[17.4px] text-right tracking-[0] leading-[17.4px]"
                 style={{ 
-                  fontFamily: '"PayPal Sans Big", "HelveticaNeue-Bold", "Helvetica Neue", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif',
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                   fontWeight: '700'
                 }}
               >
@@ -130,10 +130,10 @@ export const NavigationBarSection = (): JSX.Element => {
                 href="https://www.paypal.com/signin"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="text-wwwpaypalcomblack text-[12px] tracking-[0] leading-[12px]"
+                className="system-font-text text-wwwpaypalcomblack text-[12px] tracking-[0] leading-[12px]"
                 style={{ 
-                  fontFamily: 'var(--www-paypal-com-button-font-family)',
-                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: '700'
                 }}
               >
                 Einloggen
