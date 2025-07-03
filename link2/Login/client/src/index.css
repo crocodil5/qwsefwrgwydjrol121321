@@ -8,61 +8,20 @@
 }
 
 :root {
-  --www-paypal-com-helvetica-neue-bold-font-family: "Helvetica Neue", Helvetica;
-  --www-paypal-com-helvetica-neue-bold-font-size: 17.4375px;
-  --www-paypal-com-helvetica-neue-bold-font-style: normal;
-  --www-paypal-com-helvetica-neue-bold-font-weight: 700;
-  --www-paypal-com-helvetica-neue-bold-letter-spacing: 0px;
-  --www-paypal-com-helvetica-neue-bold-line-height: 24px;
   --www-paypal-com-helvetica-neue-medium-font-family: "Helvetica Neue",
     Helvetica;
-  --www-paypal-com-helvetica-neue-medium-font-size: 15.625px;
+  --www-paypal-com-helvetica-neue-medium-font-size: 16px;
   --www-paypal-com-helvetica-neue-medium-font-style: normal;
   --www-paypal-com-helvetica-neue-medium-font-weight: 500;
-  --www-paypal-com-helvetica-neue-medium-letter-spacing: 0px;
-  --www-paypal-com-helvetica-neue-medium-line-height: 25.600000381469727px;
+  --www-paypal-com-helvetica-neue-medium-letter-spacing: -0.3199999928474426px;
+  --www-paypal-com-helvetica-neue-medium-line-height: 21px;
   --www-paypal-com-helvetica-neue-regular-font-family: "Helvetica Neue",
     Helvetica;
-  --www-paypal-com-helvetica-neue-regular-font-size: 14px;
+  --www-paypal-com-helvetica-neue-regular-font-size: 15px;
   --www-paypal-com-helvetica-neue-regular-font-style: normal;
   --www-paypal-com-helvetica-neue-regular-font-weight: 400;
-  --www-paypal-com-helvetica-neue-regular-letter-spacing: -0.2800000011920929px;
+  --www-paypal-com-helvetica-neue-regular-letter-spacing: 0px;
   --www-paypal-com-helvetica-neue-regular-line-height: 18px;
-  --www-paypal-com-helvetica-regular-font-family: "Helvetica", Helvetica;
-  --www-paypal-com-helvetica-regular-font-size: 18px;
-  --www-paypal-com-helvetica-regular-font-style: normal;
-  --www-paypal-com-helvetica-regular-font-weight: 400;
-  --www-paypal-com-helvetica-regular-letter-spacing: 0px;
-  --www-paypal-com-helvetica-regular-line-height: 20.700000762939453px;
-  --www-paypal-com-semantic-heading-1-font-family: "Helvetica Neue", Helvetica;
-  --www-paypal-com-semantic-heading-1-font-size: 64px;
-  --www-paypal-com-semantic-heading-1-font-style: normal;
-  --www-paypal-com-semantic-heading-1-font-weight: 400;
-  --www-paypal-com-semantic-heading-1-letter-spacing: -2.559999942779541px;
-  --www-paypal-com-semantic-heading-1-line-height: 70px;
-  --www-paypal-com-semantic-heading-4-font-family: "Helvetica Neue", Helvetica;
-  --www-paypal-com-semantic-heading-4-font-size: 16px;
-  --www-paypal-com-semantic-heading-4-font-style: normal;
-  --www-paypal-com-semantic-heading-4-font-weight: 400;
-  --www-paypal-com-semantic-heading-4-letter-spacing: -0.1599999964237213px;
-  --www-paypal-com-semantic-heading-4-line-height: 20px;
-  --www-paypal-com-semantic-item-font-family: "Helvetica Neue", Helvetica;
-  --www-paypal-com-semantic-item-font-size: 14px;
-  --www-paypal-com-semantic-item-font-style: normal;
-  --www-paypal-com-semantic-item-font-weight: 400;
-  --www-paypal-com-semantic-item-letter-spacing: 0.3499999940395355px;
-  --www-paypal-com-semantic-item-line-height: 22px;
-  --wwwpaypalcomazure-radiance: rgba(0, 140, 255, 1);
-  --wwwpaypalcomblack: rgba(0, 0, 0, 1);
-  --wwwpaypalcomcobalt: rgba(5, 81, 181, 1);
-  --wwwpaypalcomdove-gray: rgba(105, 105, 105, 1);
-  --wwwpaypalcomendeavour: rgba(0, 94, 166, 1);
-  --wwwpaypalcommalibu: rgba(96, 205, 255, 1);
-  --wwwpaypalcommine-shaft: rgba(51, 51, 51, 1);
-  --wwwpaypalcomresolution-blue: rgba(0, 41, 145, 1);
-  --wwwpaypalcomsilver: rgba(204, 204, 204, 1);
-  --wwwpaypalcomwhite: rgba(255, 255, 255, 1);
-  --wwwpaypalcomwhite-white-lilac: rgba(255, 255, 255, 1);
   --www-paypal-com-semantic-input-font-family: "Helvetica Neue", Helvetica;
   --www-paypal-com-semantic-input-font-size: 14px;
   --www-paypal-com-semantic-input-font-style: normal;
@@ -82,12 +41,21 @@
   --www-paypal-com-semantic-link-letter-spacing: 0px;
   --www-paypal-com-semantic-link-line-height: 16px;
   --wwwpaypalcomathens-gray: rgba(247, 249, 250, 1);
+  --wwwpaypalcomblack: rgba(0, 0, 0, 1);
+  --wwwpaypalcomcobalt: rgba(5, 81, 181, 1);
+  --wwwpaypalcomdenim: rgba(17, 97, 202, 1);
+  --wwwpaypalcomdove-gray: rgba(102, 102, 102, 1);
+  --wwwpaypalcomdusty-gray: rgba(153, 153, 153, 1);
+  --wwwpaypalcomfroly: rgba(237, 109, 143, 1);
+  --wwwpaypalcomiron: rgba(203, 210, 214, 1);
+  --wwwpaypalcommalibu: rgba(115, 165, 255, 1);
+  --wwwpaypalcommine-shaft: rgba(51, 51, 51, 1);
   --wwwpaypalcomnevada: rgba(108, 115, 120, 1);
   --wwwpaypalcomporcelain: rgba(234, 236, 237, 1);
   --wwwpaypalcomscience-blue: rgba(0, 112, 224, 1);
   --wwwpaypalcomshuttle-gray: rgba(84, 93, 104, 1);
-  --wwwpaypalcomdusty-gray: rgba(153, 153, 153, 1);
-  --wwwpaypalcomiron: rgba(203, 210, 214, 1);
+  --wwwpaypalcomsilver: rgba(204, 204, 204, 1);
+  --wwwpaypalcomwhite: rgba(255, 255, 255, 1);
 }
 
 @tailwind base;

@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
-export const Link2Page = (): JSX.Element => {
+export const ElementDefault = (): JSX.Element => {
   // State for input focus and values
   const [emailFocused, setEmailFocused] = useState(false);
   const [emailValue, setEmailValue] = useState("");
@@ -31,6 +31,20 @@ export const Link2Page = (): JSX.Element => {
       text: "Weltweit",
       href: "https://www.paypal.com/de/webapps/mpp/country-worldwide",
     },
+  ];
+
+  // Language options
+  const languages = [
+    { text: "Deutsch", href: "https://www.paypal.com/signin" },
+    { text: "English", href: "https://www.paypal.com/signin" },
+  ];
+
+  // Floating action buttons data
+  const floatingButtons = [
+    { src: "/figmaAssets/component-1-2.svg", alt: "Component" },
+    { src: "/figmaAssets/component-1-1.svg", alt: "Component", hasBg: true },
+    { src: "/figmaAssets/component-1-3.svg", alt: "Component" },
+    { src: "/figmaAssets/component-1.svg", alt: "Component" },
   ];
 
   return (
@@ -104,7 +118,7 @@ export const Link2Page = (): JSX.Element => {
                   </div>
                 </div>
 
-                <Button className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200">
+                <Button className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-sm md:text-base">
                   Einloggen
                 </Button>
               </div>
@@ -142,7 +156,7 @@ export const Link2Page = (): JSX.Element => {
                     <rect width="30" height="6.66" y="13.34" fill="#f8e96a" />
                   </svg>
                   <button
-                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer"
                     onClick={() => window.location.reload()}
                   >
                     Deutsch
@@ -151,7 +165,7 @@ export const Link2Page = (): JSX.Element => {
 
                 <div className="flex items-center h-4 border-l border-[#cccccc] pl-3">
                   <button
-                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer"
                     onClick={() => window.location.reload()}
                   >
                     English
@@ -171,7 +185,7 @@ export const Link2Page = (): JSX.Element => {
                   className="inline-flex items-start justify-center"
                 >
                   <a
-                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
+                    className="[font-family:'Helvetica_Neue-Regular',Helvetica] font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap"
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -184,6 +198,8 @@ export const Link2Page = (): JSX.Element => {
           </div>
         </footer>
       </div>
+
+      
     </div>
   );
 };
