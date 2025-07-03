@@ -41,11 +41,21 @@ export const Link2Page = (): JSX.Element => {
             <CardHeader className="flex flex-col items-center p-0 w-full bg-transparent">
               <div className="flex flex-col w-[83.44px] h-10 items-start relative">
                 <div className="flex flex-col w-[83.44px] h-10 items-center pt-0 pb-[10.33px] px-0 relative">
-                  <img
+                  <svg
                     className="relative w-[83.44px] h-[29.67px]"
-                    alt="PayPal Logo"
-                    src="/figmaAssets/paypallogo.svg"
-                  />
+                    viewBox="0 0 84 30"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <text
+                      x="42"
+                      y="20"
+                      textAnchor="middle"
+                      className="fill-[#003087] font-bold text-lg"
+                      style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}
+                    >
+                      PayPal
+                    </text>
+                  </svg>
                 </div>
               </div>
             </CardHeader>
