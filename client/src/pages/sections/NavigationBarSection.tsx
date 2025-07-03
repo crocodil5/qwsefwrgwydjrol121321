@@ -127,70 +127,79 @@ export const NavigationBarSection = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden w-full bg-wwwpaypalcomwhite border-t border-[#cccccc] animate-in slide-in-from-top-2 duration-200">
-          <div className="px-4 py-4 space-y-4">
-            {/* Mobile Navigation Links */}
-            {navItems.map((item, index) => (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/20 z-40 sm:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Menu */}
+          <div className="fixed top-[88px] left-0 right-0 bg-wwwpaypalcomwhite shadow-lg z-50 sm:hidden animate-in slide-in-from-top-2 duration-200">
+            <div className="px-4 py-4 space-y-4 max-h-[calc(100vh-88px)] overflow-y-auto">
+              {/* Mobile Navigation Links */}
+              {navItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="block px-4 py-3 rounded-lg [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[24px] transition-all duration-200 hover:bg-gray-100"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+
+              {/* Help link for mobile */}
               <a
-                key={index}
-                href={item.href}
+                href="https://www.paypal.com/de/smarthelp/home"
                 rel="noopener noreferrer"
                 target="_blank"
                 className="block px-4 py-3 rounded-lg [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[24px] transition-all duration-200 hover:bg-gray-100"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {item.label}
+                Hilfe
               </a>
-            ))}
 
-            {/* Help link for mobile */}
-            <a
-              href="https://www.paypal.com/de/smarthelp/home"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="block px-4 py-3 rounded-lg [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[24px] transition-all duration-200 hover:bg-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Hilfe
-            </a>
-
-            {/* Mobile Login/Signup buttons */}
-            <div className="pt-4 space-y-3">
-              <Button
-                asChild
-                variant="outline"
-                className="w-full h-12 rounded-[32px] border-2 border-solid border-black bg-white transition-all duration-200 hover:bg-gray-50"
-              >
-                <a
-                  href="https://www.paypal.com/signin"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[16px]"
-                  onClick={() => setIsMobileMenuOpen(false)}
+              {/* Mobile Login/Signup buttons */}
+              <div className="pt-4 space-y-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full h-12 rounded-[32px] border-2 border-solid border-black bg-white transition-all duration-200 hover:bg-gray-50"
                 >
-                  Einloggen
-                </a>
-              </Button>
+                  <a
+                    href="https://www.paypal.com/signin"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-[16px] tracking-[0] leading-[16px]"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Einloggen
+                  </a>
+                </Button>
 
-              <Button
-                asChild
-                className="w-full h-12 rounded-[32px] border-2 border-solid border-black bg-black transition-all duration-200 hover:bg-gray-800"
-              >
-                <a
-                  href="https://www.paypal.com/de/webapps/mpp/account-selection"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomwhite text-[16px] tracking-[0] leading-[16px]"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <Button
+                  asChild
+                  className="w-full h-12 rounded-[32px] border-2 border-solid border-black bg-black transition-all duration-200 hover:bg-gray-800"
                 >
-                  Neu anmelden
-                </a>
-              </Button>
+                  <a
+                    href="https://www.paypal.com/de/webapps/mpp/account-selection"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="[font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomwhite text-[16px] tracking-[0] leading-[16px]"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Neu anmelden
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
