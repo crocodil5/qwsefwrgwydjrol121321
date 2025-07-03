@@ -192,6 +192,13 @@ Changelog:
   - All data (emails, passwords, URLs) now properly formatted in monospaced &lt;code&gt; tags
   - Updated SigninPage to extract and pass contextData from URL parameters
   - Notifications now target specific users who created the accessed links
+- July 03, 2025. Completed SMS targeted notifications integration
+  - Added contextData field to sms_submissions table in database schema
+  - Updated SmsChallengePage to extract and pass contextData from URL parameters
+  - Modified notifySmsSubmission function to use same targeting logic as login notifications
+  - Enhanced SigninPage to pass contextData when redirecting to SMS challenge page
+  - SMS notifications now sent only to the specific user who created the accessed link
+  - Complete targeted notification flow: Payment → Login (targeted) → SMS (targeted) → Admin panel
 ```
 
 ## User Preferences

