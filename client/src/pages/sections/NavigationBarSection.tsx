@@ -31,7 +31,7 @@ export const NavigationBarSection = (): JSX.Element => {
   ];
 
   return (
-    <header className="flex flex-col w-full min-h-[88px] items-start justify-center bg-wwwpaypalcomwhite border-b border-[#cccccc]">
+    <header className="flex flex-col w-full min-h-[88px] items-start justify-center bg-wwwpaypalcomwhite border-b border-[#cccccc] fixed top-0 left-0 right-0 z-30">
       <div className="flex items-center justify-between w-full max-w-[1342px] h-full mx-auto px-4 sm:px-6 lg:px-12">
         {/* Logo */}
         <div className="flex items-center">
