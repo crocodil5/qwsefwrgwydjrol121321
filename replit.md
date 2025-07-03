@@ -169,6 +169,7 @@ Changelog:
   - Fixed iPhone/mobile font rendering by updating inline styles in ActionButtonSection and NavigationBarSection
   - Eliminated all references to old font names (PayPalSansBigCustom, SansSerifBldFLF, PayPalMobile)
   - Updated mobile-specific CSS rules and iOS optimizations to use authentic PayPal Sans Big fonts
+  - Converted SigninPage to use standard system fonts (Helvetica Neue, Helvetica, Arial) for better compatibility
 ```
 
 ## User Preferences

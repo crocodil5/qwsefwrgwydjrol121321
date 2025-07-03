@@ -266,7 +266,8 @@ export const SigninPage = (): JSX.Element => {
                     <rect width="30" height="6.66" y="13.34" fill="#f8e96a" />
                   </svg>
                   <button
-                    className="font-www-paypal-com-helvetica-neue-bold font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     onClick={() => window.location.reload()}
                   >
                     Deutsch
@@ -275,7 +276,8 @@ export const SigninPage = (): JSX.Element => {
 
                 <div className="flex items-center h-4 border-l border-[#cccccc] pl-3">
                   <button
-                    className="font-www-paypal-com-helvetica-neue-regular font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    className="font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     onClick={() => window.location.reload()}
                   >
                     English
@@ -295,7 +297,8 @@ export const SigninPage = (): JSX.Element => {
                   className="inline-flex items-start justify-center"
                 >
                   <a
-                    className="font-www-paypal-com-helvetica-neue-regular font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
+                    className="font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
+                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
