@@ -146,6 +146,12 @@ Changelog:
   - Added SMS tracking tab in admin panel with real-time display
   - Configured automatic redirect to PayPal error page after SMS submission
   - Complete flow: Payment → Login → Admin approval → SMS → Admin tracking → PayPal redirect
+- July 03, 2025. Fixed mobile font rendering issues
+  - Created PayPalMobile font family with proper fallbacks for mobile devices
+  - Added system font fallbacks: -apple-system, BlinkMacSystemFont, system-ui
+  - Implemented mobile-specific CSS rules with font-display: swap
+  - Added font smoothing and text rendering optimizations for mobile browsers
+  - Updated all PayPal CSS variables to include mobile-friendly font stacks
 ```
 
 ## User Preferences
