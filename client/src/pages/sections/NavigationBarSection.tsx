@@ -159,7 +159,7 @@ export const NavigationBarSection = (): JSX.Element => {
           <Button
             variant="ghost"
             size="sm"
-            className="sm:hidden ml-2 p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95 active:bg-gray-200"
+            className="sm:hidden ml-2 p-2 rounded-full border-2 border-gray-300 hover:border-gray-400 transition-all duration-200 hover:bg-gray-100 active:scale-95 active:bg-gray-200"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
