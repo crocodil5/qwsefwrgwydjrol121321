@@ -158,6 +158,62 @@
   --wwwpaypalcomfroly: rgba(237, 109, 143, 1);
 }
 
+/* SigninPage - Force standard system fonts on iPhone/iOS */
+.signin-page-container,
+.signin-page-container * {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+/* Additional iOS/iPhone specific overrides */
+@supports (-webkit-touch-callout: none) {
+  .signin-page-container,
+  .signin-page-container *,
+  .signin-page-container input,
+  .signin-page-container button,
+  .signin-page-container label,
+  .signin-page-container a,
+  .signin-page-container span {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Specific override for iOS devices */
+@media only screen 
+  and (device-width: 375px) 
+  and (device-height: 667px) 
+  and (-webkit-device-pixel-ratio: 2),
+only screen 
+  and (device-width: 414px) 
+  and (device-height: 736px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 375px) 
+  and (device-height: 812px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 428px) 
+  and (device-height: 926px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  .signin-page-container * {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  }
+}
+
+/* Override all Tailwind font classes within SigninPage */
+.signin-page-container .font-www-paypal-com-semantic-label,
+.signin-page-container .font-www-paypal-com-helvetica-neue-regular,
+.signin-page-container .font-www-paypal-com-helvetica-neue-medium,
+.signin-page-container .font-www-paypal-com-helvetica-neue-bold,
+.signin-page-container .font-www-paypal-com-button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

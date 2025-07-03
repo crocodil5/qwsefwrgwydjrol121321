@@ -138,7 +138,7 @@ export const SigninPage = (): JSX.Element => {
   return (
     <>
       <LoadingOverlay isVisible={isLoading} />
-      <div className="flex flex-col min-h-screen items-start pt-8 md:pt-[120px] pb-0 relative bg-wwwpaypalcomwhite px-4 md:px-0">
+      <div className="signin-page-container flex flex-col min-h-screen items-start pt-8 md:pt-[120px] pb-0 relative bg-wwwpaypalcomwhite px-4 md:px-0">
         <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
           <main className="flex flex-col items-center relative self-stretch w-full">
           <Card className="flex flex-col w-full max-w-[460px] items-start gap-6 md:gap-12 pt-6 md:pt-[31px] pb-8 md:pb-[51px] px-6 md:px-[47px] border border-solid border-[#eaeced] rounded-xl">
@@ -181,7 +181,6 @@ export const SigninPage = (): JSX.Element => {
                       } ${
                         emailError ? 'text-red-500' : 'text-wwwpaypalcomnevada'
                       }`}
-                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     >
                       E-Mail-Adresse oder Handynummer
                     </label>
@@ -208,7 +207,6 @@ export const SigninPage = (): JSX.Element => {
                             ? 'top-[6px] md:top-[8px] text-xs' 
                             : 'top-[12px] md:top-[19px] text-sm md:text-base'
                         }`}
-                        style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                       >
                         Passwort
                       </label>
@@ -216,7 +214,6 @@ export const SigninPage = (): JSX.Element => {
 
                     <a
                       className="text-wwwpaypalcomscience-blue text-base font-normal"
-                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                       href="https://www.paypal.com/authflow/password-recovery/"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -229,7 +226,6 @@ export const SigninPage = (): JSX.Element => {
                 <Button 
                   onClick={handleSubmit}
                   className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200"
-                  style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                 >
                   Einloggen
                 </Button>
@@ -241,7 +237,6 @@ export const SigninPage = (): JSX.Element => {
                   <div className="inline-flex items-start justify-center px-[7.5px] py-0 absolute -top-2.5 left-1/2 transform -translate-x-1/2 bg-wwwpaypalcomwhite">
                     <span 
                       className="text-wwwpaypalcomnevada text-center whitespace-nowrap"
-                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     >
                       oder
                     </span>
@@ -251,7 +246,6 @@ export const SigninPage = (): JSX.Element => {
                 <Button
                   variant="outline"
                   className="w-full h-12 md:h-12 rounded-[100px] border-2 border-solid border-black text-wwwpaypalcomblack text-center text-sm md:text-base transition-all duration-300 ease-in-out hover:bg-blue-50 hover:border-blue-500 hover:text-blue-600"
-                  style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                   onClick={() => window.open("https://www.paypal.com/de/webapps/mpp/account-selection", "_blank")}
                 >
                   Neu anmelden
@@ -273,7 +267,6 @@ export const SigninPage = (): JSX.Element => {
                   </svg>
                   <button
                     className="font-bold text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
-                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     onClick={() => window.location.reload()}
                   >
                     Deutsch
@@ -283,7 +276,6 @@ export const SigninPage = (): JSX.Element => {
                 <div className="flex items-center h-4 border-l border-[#cccccc] pl-3">
                   <button
                     className="font-normal text-wwwpaypalcomshuttle-gray text-base text-center leading-5 whitespace-nowrap bg-transparent border-none cursor-pointer hover:text-blue-600 transition-colors duration-200"
-                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     onClick={() => window.location.reload()}
                   >
                     English
@@ -304,7 +296,6 @@ export const SigninPage = (): JSX.Element => {
                 >
                   <a
                     className="font-normal text-wwwpaypalcomshuttle-gray text-[9px] md:text-[11px] text-center leading-[14px] md:leading-[18px] whitespace-nowrap hover:text-blue-600 transition-colors duration-200"
-                    style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
