@@ -59,14 +59,14 @@ export const MainContentSection = (): JSX.Element => {
 
   return (
     <div className="flex flex-col items-start w-full bg-wwwpaypalcomwhite">
-      <footer className="flex flex-col w-full items-start justify-center py-[76.8px] px-4 md:px-8 lg:px-[289px] bg-transparent max-w-[1920px] mx-auto">
+      <footer className="flex flex-col w-full items-start justify-center py-8 sm:py-12 lg:py-[76.8px] px-4 md:px-8 lg:px-[289px] bg-transparent max-w-[1920px] mx-auto">
         <div className="w-full">
           {/* PayPal Logo */}
-          <div className="flex items-start mb-[38px]">
+          <div className="flex items-start mb-6 sm:mb-8 lg:mb-[38px]">
             <div className="flex flex-col items-start">
               <div className="flex flex-col items-start justify-center">
                 <img
-                  className="w-[146px] h-[51.91px]"
+                  className="w-24 h-8 sm:w-32 sm:h-11 lg:w-[146px] lg:h-[51.91px]"
                   alt="PayPal Logo"
                   src="/figmaAssets/component-2.svg"
                 />
@@ -75,17 +75,17 @@ export const MainContentSection = (): JSX.Element => {
           </div>
 
           {/* Top Navigation Links */}
-          <div className="flex flex-wrap items-center justify-between w-full">
-            <div className="flex flex-wrap items-start">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center justify-between w-full gap-4 sm:gap-0">
+            <div className="flex flex-wrap items-start gap-x-4 sm:gap-x-6 gap-y-3">
               {topNavLinks.map((link, index) => (
                 <div
                   key={index}
-                  className="inline-flex flex-col items-start justify-center pr-6 pb-5"
+                  className="inline-flex flex-col items-start justify-center"
                 >
                   <div className="inline-flex flex-col h-5 items-start">
                     <div className="inline-flex items-start">
                       <a
-                        className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.35px] leading-5 whitespace-nowrap"
+                        className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.35px] leading-5 transition-colors hover:text-blue-600"
                         href={link.href}
                         rel="noopener noreferrer"
                         target="_blank"
@@ -99,7 +99,7 @@ export const MainContentSection = (): JSX.Element => {
             </div>
 
             {/* Language/Region Selector */}
-            <div className="flex-wrap items-start pb-5">
+            <div className="flex items-start">
               <div className="items-center self-stretch inline-flex">
                 <div className="relative w-8 h-[18px]">
                   <img 
@@ -116,13 +116,13 @@ export const MainContentSection = (): JSX.Element => {
           <Separator className="my-4 bg-[#cccccc]" />
 
           {/* Bottom Links */}
-          <div className="flex flex-wrap items-center justify-between w-full">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full gap-4 lg:gap-0">
             {/* Bottom Left Links */}
-            <div className="flex items-start gap-6 pt-[19.75px] pb-[0.25px]">
+            <div className="flex flex-wrap items-start gap-x-4 sm:gap-x-6 gap-y-3 pt-4 lg:pt-[19.75px] pb-[0.25px]">
               {bottomLeftLinks.map((link, index) => (
                 <div key={index} className="inline-flex items-start">
                   <a
-                    className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5"
+                    className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
                     href={link.href}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -134,23 +134,25 @@ export const MainContentSection = (): JSX.Element => {
             </div>
 
             {/* Bottom Right Links */}
-            <div className="flex items-center gap-6 pt-[19.75px] pb-[0.25px] flex-wrap">
-              <div className="mt-[-1.00px] font-www-paypal-com-semantic-item font-[number:var(--www-paypal-com-semantic-item-font-weight)] text-wwwpaypalcomdove-gray text-[length:var(--www-paypal-com-semantic-item-font-size)] tracking-[var(--www-paypal-com-semantic-item-letter-spacing)] leading-[var(--www-paypal-com-semantic-item-line-height)] whitespace-nowrap [font-style:var(--www-paypal-com-semantic-item-font-style)]">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 sm:gap-x-6 gap-y-3 pt-4 lg:pt-[19.75px] pb-[0.25px] order-first lg:order-last">
+              <div className="mt-[-1.00px] font-www-paypal-com-semantic-item font-[number:var(--www-paypal-com-semantic-item-font-weight)] text-wwwpaypalcomdove-gray text-[length:var(--www-paypal-com-semantic-item-font-size)] tracking-[var(--www-paypal-com-semantic-item-letter-spacing)] leading-[var(--www-paypal-com-semantic-item-line-height)] [font-style:var(--www-paypal-com-semantic-item-font-style)] text-xs sm:text-sm">
                 ©1999–2025 PayPal. Alle Rechte vorbehalten.
               </div>
 
-              {bottomRightLinks.map((link, index) => (
-                <div key={index} className="inline-flex items-start">
-                  <a
-                    className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5"
-                    href={link.href}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {link.text}
-                  </a>
-                </div>
-              ))}
+              <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-3">
+                {bottomRightLinks.map((link, index) => (
+                  <div key={index} className="inline-flex items-start">
+                    <a
+                      className="mt-[-1.00px] [font-family:'Helvetica_Neue-Bold',Helvetica] font-bold text-wwwpaypalcomblack text-sm tracking-[0.05px] leading-5 transition-colors hover:text-blue-600"
+                      href={link.href}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {link.text}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

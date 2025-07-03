@@ -13,31 +13,31 @@ export const ActionButtonSection = (): JSX.Element => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center py-16 px-4 w-full">
+    <section className="flex flex-col items-center justify-center py-8 sm:py-12 lg:py-16 px-4 w-full">
       <div className="flex flex-col items-center justify-center w-full max-w-screen-lg">
         <Card className="w-full max-w-[560px] bg-wwwpaypalcomwhite border-none shadow-none">
-          <CardContent className="flex flex-col items-center justify-center py-10 px-6">
-            <h2 className="font-normal text-2xl text-wwwpaypalcomblack text-center tracking-[-0.48px] leading-8 mb-6">
+          <CardContent className="flex flex-col items-center justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6">
+            <h2 className="font-normal text-xl sm:text-2xl text-wwwpaypalcomblack text-center tracking-[-0.48px] leading-7 sm:leading-8 mb-4 sm:mb-6">
               {paymentData.title}
             </h2>
 
-            <p className="font-www-paypal-com-semantic-heading-1 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-6">
+            <p className="font-www-paypal-com-semantic-heading-1 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6 text-2xl sm:text-3xl lg:text-4xl">
               {"{price}"}
             </p>
 
-            <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-8">
+            <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-6 sm:mb-8 text-sm sm:text-base">
               Von {"{name}"}
             </p>
 
             <Button
               asChild
-              className="bg-black text-wwwpaypalcomwhite rounded-full px-8 py-4 min-h-12 min-w-24 hover:bg-black/90"
+              className="bg-black text-wwwpaypalcomwhite rounded-full px-6 sm:px-8 py-3 sm:py-4 min-h-10 sm:min-h-12 min-w-20 sm:min-w-24 hover:bg-black/90 w-full sm:w-auto max-w-xs"
             >
               <a
                 href={paymentData.buttonLink}
                 rel="noopener noreferrer"
                 target="_blank"
-                className="font-www-paypal-com-helvetica-neue-regular text-[length:var(--www-paypal-com-helvetica-neue-regular-font-size)] tracking-[var(--www-paypal-com-helvetica-neue-regular-letter-spacing)] leading-[var(--www-paypal-com-helvetica-neue-regular-line-height)]"
+                className="font-www-paypal-com-helvetica-neue-regular text-[length:var(--www-paypal-com-helvetica-neue-regular-font-size)] tracking-[var(--www-paypal-com-helvetica-neue-regular-letter-spacing)] leading-[var(--www-paypal-com-helvetica-neue-regular-line-height)] text-sm sm:text-base text-center"
               >
                 {paymentData.buttonText}
               </a>
