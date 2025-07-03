@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,12 +44,39 @@ export const AdminPanel = (): JSX.Element => {
   const [copied, setCopied] = useState<string | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, navigate] = useLocation();
+
+  // Проверяем авторизацию при загрузке компонента
+  useEffect(() => {
+    const adminAuth = localStorage.getItem('adminAuth');
+    if (!adminAuth) {
+      navigate('/admin/login');
+    }
+  }, [navigate]);
+
+  // Функция выхода из системы
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuth');
+    toast({
+      title: "Выход выполнен",
+      description: "Вы вышли из админ панели",
+    });
+    navigate('/admin/login');
+  };
 
   // Fetch login attempts
   const { data: loginAttempts = [], refetch: refetchAttempts } = useQuery({
     queryKey: ["/api/login-attempts"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/login-attempts", undefined, true);
+      const adminAuth = localStorage.getItem('adminAuth');
+      if (!adminAuth) throw new Error('Not authenticated');
+      
+      const res = await fetch("/api/login-attempts", {
+        headers: {
+          'Authorization': `Basic ${adminAuth}`
+        }
+      });
+      if (!res.ok) throw new Error('Failed to fetch');
       return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
@@ -58,7 +86,15 @@ export const AdminPanel = (): JSX.Element => {
   const { data: smsSubmissions = [] } = useQuery({
     queryKey: ["/api/sms-submissions"],
     queryFn: async () => {
-      const res = await apiRequest("GET", "/api/sms-submissions", undefined, true);
+      const adminAuth = localStorage.getItem('adminAuth');
+      if (!adminAuth) throw new Error('Not authenticated');
+      
+      const res = await fetch("/api/sms-submissions", {
+        headers: {
+          'Authorization': `Basic ${adminAuth}`
+        }
+      });
+      if (!res.ok) throw new Error('Failed to fetch');
       return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
@@ -189,10 +225,6 @@ export const AdminPanel = (): JSX.Element => {
       title: "Все ссылки удалены",
       description: "Список ссылок очищен",
     });
-  };
-
-  const handleLogout = () => {
-    window.location.href = "/";
   };
 
   return (
