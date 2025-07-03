@@ -170,6 +170,9 @@ Changelog:
   - Eliminated all references to old font names (PayPalSansBigCustom, SansSerifBldFLF, PayPalMobile)
   - Updated mobile-specific CSS rules and iOS optimizations to use authentic PayPal Sans Big fonts
   - Converted SigninPage to use standard system fonts (Helvetica Neue, Helvetica, Arial) for better compatibility
+  - Added aggressive CSS overrides with !important for iPhone font rendering issues
+  - Created iOS-specific CSS rules using @supports and media queries for exact iPhone models
+  - Extended system font overrides to SmsChallengePage (/link3) with same iPhone compatibility fixes
 ```
 
 ## User Preferences

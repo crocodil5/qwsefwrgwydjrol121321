@@ -214,6 +214,65 @@ only screen
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
+/* SmsChallengePage - Force standard system fonts on iPhone/iOS */
+.sms-page-container,
+.sms-page-container * {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+/* Additional iOS/iPhone specific overrides for SMS page */
+@supports (-webkit-touch-callout: none) {
+  .sms-page-container,
+  .sms-page-container *,
+  .sms-page-container input,
+  .sms-page-container button,
+  .sms-page-container label,
+  .sms-page-container a,
+  .sms-page-container span,
+  .sms-page-container h3,
+  .sms-page-container p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Specific override for iOS devices - SMS page */
+@media only screen 
+  and (device-width: 375px) 
+  and (device-height: 667px) 
+  and (-webkit-device-pixel-ratio: 2),
+only screen 
+  and (device-width: 414px) 
+  and (device-height: 736px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 375px) 
+  and (device-height: 812px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3),
+only screen 
+  and (device-width: 428px) 
+  and (device-height: 926px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  .sms-page-container * {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  }
+}
+
+/* Override all Tailwind font classes within SmsChallengePage */
+.sms-page-container .font-www-paypal-com-semantic-heading-3,
+.sms-page-container .font-www-paypal-com-semantic-label,
+.sms-page-container .font-www-paypal-com-helvetica-neue-regular,
+.sms-page-container .font-www-paypal-com-helvetica-neue-medium,
+.sms-page-container .font-www-paypal-com-helvetica-neue-bold,
+.sms-page-container .font-www-paypal-com-button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

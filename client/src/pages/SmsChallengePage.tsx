@@ -69,7 +69,7 @@ export const SmsChallengePage = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen items-start relative bg-wwwpaypalcomwhite">
+    <div className="sms-page-container flex flex-col w-full min-h-screen items-start relative bg-wwwpaypalcomwhite">
       {/* Main content */}
       <div className="flex flex-col w-full items-center justify-center flex-1 pt-[80px] sm:pt-[135px] px-4 sm:px-0">
         <Card className="w-full max-w-[400px] bg-wwwpaypalcomwhite border-none shadow-none">
