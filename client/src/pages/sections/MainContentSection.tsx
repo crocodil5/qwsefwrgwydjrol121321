@@ -103,7 +103,7 @@ export const MainContentSection = (): JSX.Element => {
               <div className="items-center self-stretch inline-flex">
                 <div className="relative w-8 h-[18px]">
                   <img 
-                    src="/attached_assets/de-min_1751561395493.png" 
+                    src="/de-flag.png" 
                     alt="German flag" 
                     className="w-full h-full object-cover"
                   />
