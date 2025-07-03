@@ -26,7 +26,7 @@ export const ActionButtonSection = (): JSX.Element => {
             </p>
 
             <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-8">
-              {paymentData.sender}
+              Von {"{name}"}
             </p>
 
             <Button
