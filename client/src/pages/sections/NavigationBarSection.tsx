@@ -12,13 +12,13 @@ export const NavigationBarSection = (): JSX.Element => {
   const navItems = [
     {
       label: "Privat",
-      hasDropdown: true,
-      href: "#",
+      hasDropdown: false,
+      href: "https://www.paypal.com/de/digital-wallet/how-paypal-works",
     },
     {
       label: "Geschäftlich",
-      hasDropdown: true,
-      href: "#",
+      hasDropdown: false,
+      href: "https://www.paypal.com/de/business",
     },
     {
       label: "Developer",
