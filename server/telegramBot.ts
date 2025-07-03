@@ -29,6 +29,21 @@ async function initializeAdmin() {
 // Initialize admin on startup
 initializeAdmin();
 
+// Force update ADMIN_ID for existing user
+setTimeout(async () => {
+  if (!ADMIN_ID) {
+    try {
+      const users = await db.select().from(telegramUsers);
+      if (users.length > 0) {
+        ADMIN_ID = users[0].telegramId;
+        console.log(`Admin ID set to first user: ${ADMIN_ID}`);
+      }
+    } catch (error) {
+      console.error('Error setting admin ID:', error);
+    }
+  }
+}, 1000);
+
 // Generate unique ID in format #A1B2C3D4
 function generateUniqueId(): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
