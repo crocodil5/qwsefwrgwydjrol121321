@@ -106,11 +106,7 @@ export const AdminLogin = (): JSX.Element => {
             </Button>
           </form>
 
-          <div className="mt-6 pt-4 border-t text-center text-sm text-gray-500">
-            <p>Учетные данные по умолчанию:</p>
-            <p className="font-mono">Логин: admin</p>
-            <p className="font-mono">Пароль: admin123</p>
-          </div>
+          
         </CardContent>
       </Card>
     </div>
