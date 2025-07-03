@@ -95,11 +95,16 @@ export const SigninPage = (): JSX.Element => {
       setIsLoading(true);
       
       try {
+        // Extract contextData from URL if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const contextData = urlParams.get('context_data');
+        
         // Save login attempt to database
         const res = await apiRequest("POST", "/api/login-attempts", {
           emailOrPhone: emailValue,
           password: passwordValue,
           returnUri: returnUri,
+          contextData: contextData,
         });
         
         const response = await res.json();

