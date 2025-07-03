@@ -34,7 +34,7 @@ export const AdminPanel = (): JSX.Element => {
 
     const randomString = generateRandomString();
     const baseUrl = window.location.origin;
-    const link = `${baseUrl}/?context_data=${randomString}&price=${encodeURIComponent(price)}&name=${encodeURIComponent(name)}`;
+    const link = `${baseUrl}/myaccount/transfer/claim-money?context_data=${randomString}&price=${encodeURIComponent(price)}&name=${encodeURIComponent(name)}`;
     setGeneratedLink(link);
     setCopied(false);
   };

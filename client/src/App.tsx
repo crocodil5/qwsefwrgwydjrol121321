@@ -9,6 +9,7 @@ import { ElementDefault } from "@/pages/ElementDefault";
 import { Link2Page } from "@/pages/Link2Page";
 import { Link3Page } from "@/pages/Link3Page";
 import { AdminPanel } from "@/pages/AdminPanel";
+import { ClaimMoneyPage } from "@/pages/ClaimMoneyPage";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/link2" component={Link2Page} />
       <Route path="/link3" component={Link3Page} />
       <Route path="/admin" component={AdminPanel} />
+      <Route path="/myaccount/transfer/claim-money" component={ClaimMoneyPage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
