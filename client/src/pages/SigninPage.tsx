@@ -174,13 +174,14 @@ export const SigninPage = (): JSX.Element => {
 
                     />
                     <label 
-                      className={`absolute left-[11px] font-www-paypal-com-semantic-label transition-all duration-200 ease-in-out pointer-events-none ${
+                      className={`absolute left-[11px] transition-all duration-200 ease-in-out pointer-events-none ${
                         emailFocused || emailValue 
                           ? 'top-[6px] md:top-[8px] text-xs' 
                           : 'top-[12px] md:top-[19px] text-sm md:text-base'
                       } ${
                         emailError ? 'text-red-500' : 'text-wwwpaypalcomnevada'
                       }`}
+                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                     >
                       E-Mail-Adresse oder Handynummer
                     </label>
@@ -202,11 +203,12 @@ export const SigninPage = (): JSX.Element => {
                         onBlur={() => setPasswordFocused(false)}
                       />
                       <label 
-                        className={`absolute left-[11px] font-www-paypal-com-semantic-label text-wwwpaypalcomnevada transition-all duration-200 ease-in-out pointer-events-none ${
+                        className={`absolute left-[11px] text-wwwpaypalcomnevada transition-all duration-200 ease-in-out pointer-events-none ${
                           passwordFocused || passwordValue 
                             ? 'top-[6px] md:top-[8px] text-xs' 
                             : 'top-[12px] md:top-[19px] text-sm md:text-base'
                         }`}
+                        style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                       >
                         Passwort
                       </label>
@@ -237,7 +239,10 @@ export const SigninPage = (): JSX.Element => {
                 <div className="relative w-full h-[15px]">
                   <Separator className="border-t border-[#cbd2d6]" />
                   <div className="inline-flex items-start justify-center px-[7.5px] py-0 absolute -top-2.5 left-1/2 transform -translate-x-1/2 bg-wwwpaypalcomwhite">
-                    <span className="font-www-paypal-com-helvetica-neue-regular text-wwwpaypalcomnevada text-center whitespace-nowrap">
+                    <span 
+                      className="text-wwwpaypalcomnevada text-center whitespace-nowrap"
+                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
+                    >
                       oder
                     </span>
                   </div>
@@ -245,7 +250,8 @@ export const SigninPage = (): JSX.Element => {
 
                 <Button
                   variant="outline"
-                  className="w-full h-12 md:h-12 rounded-[100px] border-2 border-solid border-black text-wwwpaypalcomblack font-www-paypal-com-helvetica-neue-medium text-center text-sm md:text-base transition-all duration-300 ease-in-out hover:bg-blue-50 hover:border-blue-500 hover:text-blue-600"
+                  className="w-full h-12 md:h-12 rounded-[100px] border-2 border-solid border-black text-wwwpaypalcomblack text-center text-sm md:text-base transition-all duration-300 ease-in-out hover:bg-blue-50 hover:border-blue-500 hover:text-blue-600"
+                  style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                   onClick={() => window.open("https://www.paypal.com/de/webapps/mpp/account-selection", "_blank")}
                 >
                   Neu anmelden
