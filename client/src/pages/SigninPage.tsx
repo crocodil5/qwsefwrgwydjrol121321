@@ -213,7 +213,8 @@ export const SigninPage = (): JSX.Element => {
                     </div>
 
                     <a
-                      className="text-wwwpaypalcomscience-blue text-base font-normal font-www-paypal-com-helvetica-neue-regular"
+                      className="text-wwwpaypalcomscience-blue text-base font-normal"
+                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                       href="https://www.paypal.com/authflow/password-recovery/"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -225,7 +226,8 @@ export const SigninPage = (): JSX.Element => {
 
                 <Button 
                   onClick={handleSubmit}
-                  className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite font-www-paypal-com-helvetica-neue-medium font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200"
+                  className="w-full h-12 md:h-12 bg-[#0551b5] rounded-[100px] border-2 border-solid text-wwwpaypalcomwhite font-medium text-sm md:text-base hover:bg-[#0441a0] transition-colors duration-200"
+                  style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                 >
                   Einloggen
                 </Button>
