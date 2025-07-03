@@ -27,7 +27,13 @@ export const ActionButtonSection = (): JSX.Element => {
               {paymentData.title}
             </h2>
 
-            <p className="font-www-paypal-com-semantic-heading-1 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6">
+            <p 
+              className="text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-1-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-1-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-1-line-height)] mb-4 sm:mb-6"
+              style={{ 
+                fontFamily: 'var(--www-paypal-com-button-font-family)',
+                fontWeight: 'var(--www-paypal-com-button-font-weight)'
+              }}
+            >
               {"{price}"}
             </p>
 
