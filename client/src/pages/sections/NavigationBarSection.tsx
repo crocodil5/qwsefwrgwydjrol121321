@@ -49,14 +49,14 @@ export const NavigationBarSection = (): JSX.Element => {
                   className="flex-col items-start pl-0 pr-1 py-0 inline-flex relative"
                 >
                   {item.hasDropdown ? (
-                    <NavigationMenuTrigger className="flex items-center px-3 py-[7px] rounded-[25px] gap-1 h-auto">
+                    <NavigationMenuTrigger className="flex items-center px-3 py-[7px] rounded-[25px] gap-1 h-auto transition-all duration-200 hover:bg-gray-100 hover:scale-105">
                       <span className="[font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[15.4px] tracking-[0] leading-[25.6px]">
                         {item.label}
                       </span>
                     </NavigationMenuTrigger>
                   ) : (
                     <a
-                      className="flex items-center px-3 py-[7px] rounded-[25px] [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[15.4px] tracking-[0] leading-[25.6px]"
+                      className="flex items-center px-3 py-[7px] rounded-[25px] [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[15.4px] tracking-[0] leading-[25.6px] transition-all duration-200 hover:bg-gray-100 hover:scale-105"
                       href={item.href}
                       rel="noopener noreferrer"
                       target="_blank"
@@ -77,7 +77,7 @@ export const NavigationBarSection = (): JSX.Element => {
             href="https://www.paypal.com/de/smarthelp/home"
             rel="noopener noreferrer"
             target="_blank"
-            className="px-3 py-[7px] rounded-[25px] [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[15.6px] tracking-[0] leading-[15.6px] mr-4"
+            className="px-3 py-[7px] rounded-[25px] [font-family:'Helvetica_Neue-Medium',Helvetica] font-medium text-wwwpaypalcomblack text-[15.6px] tracking-[0] leading-[15.6px] mr-4 transition-all duration-200 hover:bg-gray-100 hover:scale-105"
           >
             Hilfe
           </a>
@@ -86,7 +86,7 @@ export const NavigationBarSection = (): JSX.Element => {
           <Button
             asChild
             variant="outline"
-            className="min-w-24 h-12 rounded-[32px] border-[3px] border-solid border-black px-[31.8px] py-0 mr-[9px] bg-white"
+            className="min-w-24 h-12 rounded-[32px] border-[3px] border-solid border-black px-[31.8px] py-0 mr-[9px] bg-white transition-all duration-200 hover:bg-gray-50 hover:scale-105 hover:shadow-md"
           >
             <a
               href="https://www.paypal.com/signin"
@@ -101,7 +101,7 @@ export const NavigationBarSection = (): JSX.Element => {
           {/* Sign up button */}
           <Button
             asChild
-            className="min-w-24 h-12 rounded-[32px] border-[3px] border-solid border-black px-[31.8px] py-0 bg-black"
+            className="min-w-24 h-12 rounded-[32px] border-[3px] border-solid border-black px-[31.8px] py-0 bg-black transition-all duration-200 hover:bg-gray-800 hover:scale-105 hover:shadow-lg"
           >
             <a
               href="https://www.paypal.com/de/webapps/mpp/account-selection"
