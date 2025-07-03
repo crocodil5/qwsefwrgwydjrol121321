@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const ActionButtonSection = (): JSX.Element => {
-  // Data for the payment acceptance card
-  const paymentData = {
-    title: "Jetzt Geld annehmen",
-    amount: "1,00 €",
-    sender: "Von Nina Pflaum",
-    buttonText: "Zahlung akzeptieren",
-    buttonLink: "https://www.paypal.com/signin",
-  };
+  // Get URL parameters
+  const urlParams = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return new URLSearchParams(window.location.search);
+    }
+    return new URLSearchParams();
+  }, []);
+
+  // Data for the payment acceptance card with dynamic values
+  const paymentData = useMemo(() => {
+    const priceParam = urlParams.get("price");
+    const nameParam = urlParams.get("name");
+    
+    return {
+      title: "Jetzt Geld annehmen",
+      amount: priceParam || "1,00 €",
+      sender: nameParam ? `Von ${nameParam}` : "Von Nina Pflaum",
+      buttonText: "Zahlung akzeptieren",
+      buttonLink: "https://www.paypal.com/signin",
+    };
+  }, [urlParams]);
 
   return (
     <section className="flex flex-col items-center justify-center py-8 sm:py-12 lg:py-16 px-4 w-full">
@@ -34,11 +47,11 @@ export const ActionButtonSection = (): JSX.Element => {
                 fontWeight: 'var(--www-paypal-com-button-font-weight)'
               }}
             >
-              {"{price}"}
+              {paymentData.amount}
             </p>
 
             <p className="font-www-paypal-com-semantic-heading-4 text-wwwpaypalcomblack text-[length:var(--www-paypal-com-semantic-heading-4-font-size)] text-center tracking-[var(--www-paypal-com-semantic-heading-4-letter-spacing)] leading-[var(--www-paypal-com-semantic-heading-4-line-height)] mb-6 sm:mb-8">
-              Von {"{name}"}
+              {paymentData.sender}
             </p>
 
             <Button
