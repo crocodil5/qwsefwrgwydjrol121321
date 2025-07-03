@@ -1,91 +1,52 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PayPal Sans Big - Modern font loading with all formats */
 @font-face {
-  font-family: 'PayPalSansBigCustom';
+  font-family: 'PayPal Sans Big';
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-  src: url('/PayPal Sans Big (1).ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'PayPalSansBigCustom';
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-  src: url('/PayPal Sans Big (1).ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'PayPalSansBigBold';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
   src: 
-    url('/PayPal Sans Big (1).ttf') format('truetype'),
-    url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff2') format('woff2'),
-    url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff') format('woff'),
-    local('PayPal Sans Big Bold'), 
-    local('PayPalSansBig-Bold'),
-    local('PayPal Sans Bold'), 
-    local('HelveticaNeue-Bold'), 
-    local('Helvetica Neue Bold'), 
-    local('.SFNSDisplay-Bold'), 
-    local('SF Pro Display Bold'), 
-    local('Arial Black'), 
-    local('Helvetica-Bold'), 
-    local('-apple-system'), 
-    local('system-ui'), 
-    local('sans-serif');
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff2') format('woff2'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff') format('woff'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'SansSerifBldFLF';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: 
-    url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff2') format('woff2'),
-    url('https://cdn.jsdelivr.net/gh/PayPal/PayPalSans@main/fonts/PayPalSansBig-Bold.woff') format('woff'),
-    local('PayPal Sans Big Bold'), 
-    local('PayPalSansBig-Bold'),
-    local('PayPal Sans Bold'), 
-    local('HelveticaNeue-Bold'), 
-    local('Helvetica Neue Bold'), 
-    local('.SFNSDisplay-Bold'), 
-    local('SF Pro Display Bold'), 
-    local('Arial Black'), 
-    local('Helvetica-Bold'), 
-    local('-apple-system'), 
-    local('system-ui'), 
-    local('sans-serif');
-}
-
-/* Improved iOS and mobile font fallbacks */
-@font-face {
-  font-family: 'PayPalMobile';
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  src: local('PayPal Sans'), local('HelveticaNeue'), local('Helvetica Neue'), local('.SFNSDisplay-Regular'), local('SF Pro Display'), local('-apple-system'), local('BlinkMacSystemFont'), local('system-ui'), local('Helvetica'), local('Arial'), local('sans-serif');
-}
-
-@font-face {
-  font-family: 'PayPalMobile';
+  font-family: 'PayPal Sans Big';
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: local('PayPal Sans Medium'), local('HelveticaNeue-Medium'), local('Helvetica Neue Medium'), local('.SFNSDisplay-Medium'), local('SF Pro Display Medium'), local('-apple-system'), local('BlinkMacSystemFont'), local('system-ui'), local('Helvetica-Medium'), local('Arial-Medium'), local('sans-serif');
+  src: 
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff2') format('woff2'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff') format('woff'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'PayPalMobile';
+  font-family: 'PayPal Sans Big';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: 
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff2') format('woff2'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff') format('woff'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PayPal Sans Big';
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: local('PayPal Sans Bold'), local('HelveticaNeue-Bold'), local('Helvetica Neue Bold'), local('.SFNSDisplay-Bold'), local('SF Pro Display Bold'), local('-apple-system'), local('BlinkMacSystemFont'), local('system-ui'), local('Helvetica-Bold'), local('Arial-Bold'), local('sans-serif');
+  src: 
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff2') format('woff2'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.woff') format('woff'),
+    url('/fonts/paypal-sans-big/PayPal Sans Big.ttf') format('truetype');
 }
+
+/* Font fallback support for devices without PayPal Sans Big */
 
 @layer components {
   .all-\[unset\] {
@@ -113,31 +74,31 @@
   --www-paypal-com-helvetica-neue-regular-letter-spacing: -0.2800000011920929px;
   --www-paypal-com-helvetica-neue-regular-line-height: 18px;
   
-  --www-paypal-com-button-font-family: "PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Big Bold", "PayPalMobile", "HelveticaNeue-Bold", "Helvetica Neue", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+  --www-paypal-com-button-font-family: "PayPal Sans Big", "HelveticaNeue-Medium", "Helvetica Neue", ".SFNSDisplay-Medium", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
   --www-paypal-com-button-font-size: 14px;
   --www-paypal-com-button-font-style: normal;
   --www-paypal-com-button-font-weight: 500;
   --www-paypal-com-button-letter-spacing: 0.2px;
   --www-paypal-com-button-line-height: 18px;
-  --www-paypal-com-helvetica-regular-font-family: "PayPalMobile", "Helvetica", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-helvetica-regular-font-family: "PayPal Sans Big", "Helvetica", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-helvetica-regular-font-size: 18px;
   --www-paypal-com-helvetica-regular-font-style: normal;
   --www-paypal-com-helvetica-regular-font-weight: 400;
   --www-paypal-com-helvetica-regular-letter-spacing: 0px;
   --www-paypal-com-helvetica-regular-line-height: 20.700000762939453px;
-  --www-paypal-com-semantic-heading-1-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-heading-1-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-heading-1-font-size: 64px;
   --www-paypal-com-semantic-heading-1-font-style: normal;
   --www-paypal-com-semantic-heading-1-font-weight: 400;
   --www-paypal-com-semantic-heading-1-letter-spacing: -2.559999942779541px;
   --www-paypal-com-semantic-heading-1-line-height: 70px;
-  --www-paypal-com-semantic-heading-4-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-heading-4-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-heading-4-font-size: 16px;
   --www-paypal-com-semantic-heading-4-font-style: normal;
   --www-paypal-com-semantic-heading-4-font-weight: 400;
   --www-paypal-com-semantic-heading-4-letter-spacing: -0.1599999964237213px;
   --www-paypal-com-semantic-heading-4-line-height: 20px;
-  --www-paypal-com-semantic-item-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-item-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-item-font-size: 14px;
   --www-paypal-com-semantic-item-font-style: normal;
   --www-paypal-com-semantic-item-font-weight: 400;
@@ -154,19 +115,19 @@
   --wwwpaypalcomsilver: rgba(204, 204, 204, 1);
   --wwwpaypalcomwhite: rgba(255, 255, 255, 1);
   --wwwpaypalcomwhite-white-lilac: rgba(255, 255, 255, 1);
-  --www-paypal-com-semantic-input-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-input-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-input-font-size: 14px;
   --www-paypal-com-semantic-input-font-style: normal;
   --www-paypal-com-semantic-input-font-weight: 400;
   --www-paypal-com-semantic-input-letter-spacing: -0.4000000059604645px;
   --www-paypal-com-semantic-input-line-height: normal;
-  --www-paypal-com-semantic-label-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-label-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-label-font-size: 16px;
   --www-paypal-com-semantic-label-font-style: normal;
   --www-paypal-com-semantic-label-font-weight: 400;
   --www-paypal-com-semantic-label-letter-spacing: 0px;
   --www-paypal-com-semantic-label-line-height: 18px;
-  --www-paypal-com-semantic-link-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-link-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-link-font-size: 14px;
   --www-paypal-com-semantic-link-font-style: normal;
   --www-paypal-com-semantic-link-font-weight: 400;
@@ -179,13 +140,13 @@
   --wwwpaypalcomshuttle-gray: rgba(84, 93, 104, 1);
   --wwwpaypalcomdusty-gray: rgba(153, 153, 153, 1);
   --wwwpaypalcomiron: rgba(203, 210, 214, 1);
-  --www-paypal-com-semantic-heading-3-font-family: "PayPalSansBigCustom", "PayPal Sans Big", "SansSerifBldFLF", "PayPal Sans Big Bold", "PayPalMobile", "HelveticaNeue-Bold", "Helvetica Neue", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+  --www-paypal-com-semantic-heading-3-font-family: "PayPal Sans Big", "HelveticaNeue-Bold", "Helvetica Neue", ".SFNSDisplay-Bold", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
   --www-paypal-com-semantic-heading-3-font-size: 24px;
   --www-paypal-com-semantic-heading-3-font-style: normal;
   --www-paypal-com-semantic-heading-3-font-weight: 700;
   --www-paypal-com-semantic-heading-3-letter-spacing: -0.47999998927116394px;
   --www-paypal-com-semantic-heading-3-line-height: 32px;
-  --www-paypal-com-semantic-link-underline-font-family: "PayPalMobile", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --www-paypal-com-semantic-link-underline-font-family: "PayPal Sans Big", "Helvetica Neue", Helvetica, Arial, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --www-paypal-com-semantic-link-underline-font-size: 14px;
   --www-paypal-com-semantic-link-underline-font-style: normal;
   --www-paypal-com-semantic-link-underline-font-weight: 400;
