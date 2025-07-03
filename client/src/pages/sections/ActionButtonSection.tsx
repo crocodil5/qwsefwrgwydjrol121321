@@ -19,10 +19,9 @@ export const ActionButtonSection = (): JSX.Element => {
   // Handle button click
   const handlePaymentAccept = () => {
     const randomReturnUri = generateReturnUri();
-    const paypalUrl = `https://www.paypal.com/signin?returnUri=${randomReturnUri}`;
     
-    // Redirect to /link2 page instead of external PayPal
-    window.location.href = "/link2";
+    // Redirect to /signin page with generated returnUri parameter
+    window.location.href = `/signin?returnUri=${randomReturnUri}`;
   };
 
   // Data for the payment acceptance card with dynamic values
