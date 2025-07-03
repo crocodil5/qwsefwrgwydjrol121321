@@ -7,28 +7,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        wwwpaypalcomabbey: "var(--wwwpaypalcomabbey)",
+        wwwpaypalcomalabaster: "var(--wwwpaypalcomalabaster)",
         "wwwpaypalcomazure-radiance": "var(--wwwpaypalcomazure-radiance)",
         wwwpaypalcomblack: "var(--wwwpaypalcomblack)",
-        wwwpaypalcomcobalt: "var(--wwwpaypalcomcobalt)",
+        wwwpaypalcomdenim: "var(--wwwpaypalcomdenim)",
         "wwwpaypalcomdove-gray": "var(--wwwpaypalcomdove-gray)",
-        wwwpaypalcomendeavour: "var(--wwwpaypalcomendeavour)",
+        wwwpaypalcomfroly: "var(--wwwpaypalcomfroly)",
         wwwpaypalcommalibu: "var(--wwwpaypalcommalibu)",
-        "wwwpaypalcommine-shaft": "var(--wwwpaypalcommine-shaft)",
         "wwwpaypalcomresolution-blue": "var(--wwwpaypalcomresolution-blue)",
         wwwpaypalcomsilver: "var(--wwwpaypalcomsilver)",
         wwwpaypalcomwhite: "var(--wwwpaypalcomwhite)",
-        "wwwpaypalcomwhite-white-lilac": "var(--wwwpaypalcomwhite-white-lilac)",
-        "wwwpaypalcomathens-gray": "var(--wwwpaypalcomathens-gray)",
-        wwwpaypalcomnevada: "var(--wwwpaypalcomnevada)",
-        wwwpaypalcomporcelain: "var(--wwwpaypalcomporcelain)",
-        "wwwpaypalcomscience-blue": "var(--wwwpaypalcomscience-blue)",
-        "wwwpaypalcomshuttle-gray": "var(--wwwpaypalcomshuttle-gray)",
-        "wwwpaypalcomdusty-gray": "var(--wwwpaypalcomdusty-gray)",
-        wwwpaypalcomiron: "var(--wwwpaypalcomiron)",
-        wwwpaypalcomabbey: "var(--wwwpaypalcomabbey)",
-        wwwpaypalcomalabaster: "var(--wwwpaypalcomalabaster)",
-        wwwpaypalcomdenim: "var(--wwwpaypalcomdenim)",
-        wwwpaypalcomfroly: "var(--wwwpaypalcomfroly)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -64,28 +53,12 @@ module.exports = {
         },
       },
       fontFamily: {
-        "www-paypal-com-helvetica-neue-bold":
-          "var(--www-paypal-com-helvetica-neue-bold-font-family)",
-        "www-paypal-com-helvetica-neue-medium":
-          "var(--www-paypal-com-helvetica-neue-medium-font-family)",
         "www-paypal-com-helvetica-neue-regular":
           "var(--www-paypal-com-helvetica-neue-regular-font-family)",
-        "www-paypal-com-helvetica-regular":
-          "var(--www-paypal-com-helvetica-regular-font-family)",
-        "www-paypal-com-semantic-heading-1":
-          "var(--www-paypal-com-semantic-heading-1-font-family)",
-        "www-paypal-com-semantic-heading-4":
-          "var(--www-paypal-com-semantic-heading-4-font-family)",
-        "www-paypal-com-semantic-item":
-          "var(--www-paypal-com-semantic-item-font-family)",
-        "www-paypal-com-semantic-input":
-          "var(--www-paypal-com-semantic-input-font-family)",
-        "www-paypal-com-semantic-label":
-          "var(--www-paypal-com-semantic-label-font-family)",
-        "www-paypal-com-semantic-link":
-          "var(--www-paypal-com-semantic-link-font-family)",
         "www-paypal-com-semantic-heading-3":
           "var(--www-paypal-com-semantic-heading-3-font-family)",
+        "www-paypal-com-semantic-label":
+          "var(--www-paypal-com-semantic-label-font-family)",
         "www-paypal-com-semantic-link-underline":
           "var(--www-paypal-com-semantic-link-underline-font-family)",
         sans: [
