@@ -37,7 +37,11 @@ export const ActionButtonSection = (): JSX.Element => {
                 href={paymentData.buttonLink}
                 rel="noopener noreferrer"
                 target="_blank"
-                className="font-www-paypal-com-helvetica-neue-regular text-[length:var(--www-paypal-com-helvetica-neue-regular-font-size)] tracking-[var(--www-paypal-com-helvetica-neue-regular-letter-spacing)] leading-[var(--www-paypal-com-helvetica-neue-regular-line-height)] text-sm sm:text-base text-center"
+                className="text-[length:var(--www-paypal-com-button-font-size)] tracking-[var(--www-paypal-com-button-letter-spacing)] leading-[var(--www-paypal-com-button-line-height)] text-sm sm:text-base text-center"
+                style={{ 
+                  fontFamily: 'var(--www-paypal-com-button-font-family)',
+                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                }}
               >
                 {paymentData.buttonText}
               </a>
