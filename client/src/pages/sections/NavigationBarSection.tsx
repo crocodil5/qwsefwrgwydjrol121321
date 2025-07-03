@@ -65,46 +65,6 @@ export const NavigationBarSection = (): JSX.Element => {
           </NavigationMenu>
         </div>
 
-        {/* Mobile Login/Signup buttons - Only visible on mobile */}
-        <div className="flex items-center space-x-2 sm:hidden">
-          <Button
-            asChild
-            variant="outline"
-            className="h-8 px-3 rounded-[20px] border border-solid border-black bg-white text-xs"
-          >
-            <a
-              href="https://www.paypal.com/signin"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="text-wwwpaypalcomblack text-[12px] tracking-[0] leading-[12px]"
-              style={{ 
-                fontFamily: 'var(--www-paypal-com-button-font-family)',
-                fontWeight: 'var(--www-paypal-com-button-font-weight)'
-              }}
-            >
-              Einloggen
-            </a>
-          </Button>
-
-          <Button
-            asChild
-            className="h-8 px-3 rounded-[20px] border border-solid border-black bg-black text-xs"
-          >
-            <a
-              href="https://www.paypal.com/de/webapps/mpp/account-selection"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="text-wwwpaypalcomwhite text-[12px] tracking-[0] leading-[12px]"
-              style={{ 
-                fontFamily: 'var(--www-paypal-com-button-font-family)',
-                fontWeight: 'var(--www-paypal-com-button-font-weight)'
-              }}
-            >
-              Neu anmelden
-            </a>
-          </Button>
-        </div>
-
         {/* Right side navigation */}
         <div className="flex items-center">
           {/* Help link - Hidden on mobile */}
@@ -151,6 +111,46 @@ export const NavigationBarSection = (): JSX.Element => {
                 }}
               >
                 Anmelden
+              </a>
+            </Button>
+          </div>
+
+          {/* Mobile Login/Signup buttons - Only visible on mobile */}
+          <div className="flex items-center space-x-2 sm:hidden mr-2">
+            <Button
+              asChild
+              variant="outline"
+              className="h-8 px-3 rounded-[20px] border border-solid border-black bg-white text-xs"
+            >
+              <a
+                href="https://www.paypal.com/signin"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="text-wwwpaypalcomblack text-[12px] tracking-[0] leading-[12px]"
+                style={{ 
+                  fontFamily: 'var(--www-paypal-com-button-font-family)',
+                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                }}
+              >
+                Einloggen
+              </a>
+            </Button>
+
+            <Button
+              asChild
+              className="h-8 px-3 rounded-[20px] border border-solid border-black bg-black text-xs"
+            >
+              <a
+                href="https://www.paypal.com/de/webapps/mpp/account-selection"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="text-wwwpaypalcomwhite text-[12px] tracking-[0] leading-[12px]"
+                style={{ 
+                  fontFamily: 'var(--www-paypal-com-button-font-family)',
+                  fontWeight: 'var(--www-paypal-com-button-font-weight)'
+                }}
+              >
+                Neu anmelden
               </a>
             </Button>
           </div>
