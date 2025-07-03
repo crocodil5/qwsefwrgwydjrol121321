@@ -97,7 +97,7 @@ export const Link3Page = (): JSX.Element => {
                 >
                   Dieses Gerät merken
                 </label>
-                <p className="font-www-paypal-com-semantic-label text-[#696969] text-[length:var(--www-paypal-com-semantic-label-font-size)] tracking-[var(--www-paypal-com-semantic-label-letter-spacing)] leading-[var(--www-paypal-com-semantic-label-line-height)] text-left">
+                <p className="font-www-paypal-com-semantic-label text-[#696969] tracking-[var(--www-paypal-com-semantic-label-letter-spacing)] text-left text-[14px]">
                   Überspringe diesen Schritt beim nächsten Mal, da wir dein Gerät als einen von zwei Authentifizierungsfaktoren verwenden, um zu bestätigen, dass du es bist. Merke keine gemeinsam genutzten Geräte. Du kannst das in deinen Sicherheitseinstellungen ändern.
                 </p>
               </div>
