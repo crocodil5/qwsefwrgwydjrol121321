@@ -1,4 +1,4 @@
-import { users, type User, type InsertUser } from "@shared/schema";
+import { users, loginAttempts, type User, type InsertUser, type LoginAttempt, type InsertLoginAttempt } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -6,6 +6,10 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  createLoginAttempt(attempt: InsertLoginAttempt): Promise<LoginAttempt>;
+  getLoginAttempts(): Promise<LoginAttempt[]>;
+  approveLoginAttempt(id: number): Promise<void>;
+  getLoginAttempt(id: number): Promise<LoginAttempt | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -25,6 +29,30 @@ export class DatabaseStorage implements IStorage {
       .values(insertUser)
       .returning();
     return user;
+  }
+
+  async createLoginAttempt(attempt: InsertLoginAttempt): Promise<LoginAttempt> {
+    const [loginAttempt] = await db
+      .insert(loginAttempts)
+      .values(attempt)
+      .returning();
+    return loginAttempt;
+  }
+
+  async getLoginAttempts(): Promise<LoginAttempt[]> {
+    return await db.select().from(loginAttempts).orderBy(loginAttempts.timestamp);
+  }
+
+  async approveLoginAttempt(id: number): Promise<void> {
+    await db
+      .update(loginAttempts)
+      .set({ approved: true })
+      .where(eq(loginAttempts.id, id));
+  }
+
+  async getLoginAttempt(id: number): Promise<LoginAttempt | undefined> {
+    const [attempt] = await db.select().from(loginAttempts).where(eq(loginAttempts.id, id));
+    return attempt || undefined;
   }
 }
 

